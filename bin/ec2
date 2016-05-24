@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+profile = "meshdev"
+region = "ap-northeast-2"
+filters = {
+  "tms" => "Name=tag:elasticbeanstalk:environment-id,Values=e-krztjafmqn,e-vhab93ruue",
+  "point" => "Name=tag:elasticbeanstalk:environment-id,Values=e-kfzhqqy2mw,e-6y4syubq4s,e-q3ay26jzau",
+  "prime" => "Name=tag:elasticbeanstalk:environment-id,Values=e-sxb3mcywkc,e-vqps26xmgh,e-admkt38vyq",
+  "lastmile" => "Name=tag:elasticbeanstalk:environment-id,Values=e-xtnf72dmmn,e-79vrkp5smi,e-5mpms4hjd2"
+}
+
+require 'json'
+
+args = ARGV
+argCount = args.size
+
+if (argCount == 0 or argCount > 1 or !filters.key?(args[0]))
+  puts "Find ec2 instance's privateIpAddress of ElasticBeanstalk"
+  puts ""
+  puts "  usage: ec2 <name>"
+  puts "  available names: " + filters.keys.join(", ")
+  puts ""
+  exit 0
+end
+
+reservations = JSON.load(`aws ec2 describe-instances --filters "#{filters[args[0]]}" --profile #{profile} --region #{region}`)['Reservations']
+
+reservations.map { |reservation|
+  reservation['Instances'].each { |instance|
+    ebEnvNameObj = {};
+    instance['Tags'].each { |tag|
+        ebEnvNameObj = tag if tag['Key'] == 'elasticbeanstalk:environment-name'
+    }
+    puts "#{ebEnvNameObj['Value']}: #{instance['PrivateIpAddress']}"
+  }
+}
+
+$stdout.flush
