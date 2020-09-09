@@ -160,11 +160,15 @@ ln -nfs $DOTFILES/.zshrc $HOME/.zshrc
 source $HOME/.zshrc
 
 #-------------------------------------------------------------------------------
-# Enable jenv
+# Enable jenv and rbenv
 #-------------------------------------------------------------------------------
 
 jenv add $(javahome 1.8)
 jenv add $(javahome 11)
+# `rbenv install -l` list installed versions
+# `rbenv install <version>` to install a specific version
+# `rbenv shell <version>` to specify ruby version used in shedll
+# `rbenv global <version>` to set global version
 
 #-------------------------------------------------------------------------------
 # Set OS X preferences

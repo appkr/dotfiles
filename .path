@@ -27,7 +27,9 @@ export NODE_PATH="$HOME/npm/lib/node_modules"
 #export PATH="$(brew --prefix php)/bin:$PATH"
 
 PATH="$(brew --prefix ruby)/bin:$PATH"
-GEM_HOME=$HOME/gems
+mkdir -p $HOME/gems
+export GEM_HOME=$HOME/gems
+export GEM_PATH=$HOME/gems
 PATH=$GEM_HOME/bin:$PATH
 
 #-------------------------------------------------------------------------------

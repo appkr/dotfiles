@@ -144,9 +144,10 @@ unset files file;
 source <(kubectl completion zsh)
 
 #-------------------------------------------------------------------------------
-# Activate jenv
+# Activate jenv & rbenv
 #-------------------------------------------------------------------------------
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
