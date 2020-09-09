@@ -5,9 +5,8 @@
 # Thanks Mathias Bynens! https://mths.be/osx
 #-------------------------------------------------------------------------------
 
-DOTFILES=$HOME/dotfiles
-CASK_ARGS='--appdir="/Applications"'
-
+export DOTFILES=$HOME/dotfiles
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 #-------------------------------------------------------------------------------
 # Update dotfiles itself
 #-------------------------------------------------------------------------------
@@ -63,20 +62,20 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew cask install adoptopenjdk/openjdk/adoptopenjdk $CASK_ARGS
-brew cask install adoptopenjdk11 $CASK_ARGS
-brew cask install docker $CASK_ARGS
-brew cask install firefox $CASK_ARGS
-brew cask install google-chrome $CASK_ARGS
-brew cask install google-backup-and-sync $CASK_ARGS
-brew cask install intellij-idea $CASK_ARGS
-brew cask install iterm2 $CASK_ARGS
-brew cask install postman $CASK_ARGS
-brew cask install obs $CASK_ARGS
-brew cask install slack $CASK_ARGS
-brew cask install sublime-text $CASK_ARGS
-brew cask install wireshark $CASK_ARGS
-brew cask install font-source-code-pro $CASK_ARGS
+brew cask install adoptopenjdk/openjdk/adoptopenjdk
+brew cask install adoptopenjdk11
+brew cask install docker
+brew cask install firefox
+brew cask install google-chrome
+brew cask install google-backup-and-sync
+brew cask install intellij-idea
+brew cask install iterm2
+brew cask install postman
+brew cask install obs
+brew cask install slack
+brew cask install sublime-text
+brew cask install wireshark
+brew cask install font-source-code-pro
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration
