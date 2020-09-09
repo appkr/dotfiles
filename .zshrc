@@ -17,13 +17,6 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 #-------------------------------------------------------------------------------
 
-#export POWERLINE_RIGHT_B="none"
-#export POWERLINE_HIDE_USER_NAME="true"
-#export POWERLINE_HIDE_HOST_NAME="true"
-#export POWERLINE_DISABLE_RPROMPT="true"
-#POWERLINE_PATH="short"
-#POWERLINE_DETECT_SSH="true"
-
 # see https://github.com/bhilburn/powerlevel9k
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
@@ -127,15 +120,13 @@ source $ZSH/oh-my-zsh.sh
 # * ~/.extra can be used for other settings you don’t want to commit.
 #-------------------------------------------------------------------------------
 
-files=("$DOTFILES/.export" "$DOTFILES/.path" "$DOTFILES/.aliases" "$DOTFILES/.functions" "$DOTFILES/.extra");
+files=("$DOTFILES/export.sh" "$DOTFILES/path.sh" "$DOTFILES/aliases.sh" "$DOTFILES/functions.sh");
 
 for file in "${files[@]}"; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 
 unset files file;
-
-# eval "$(hub alias -s)"
 
 #-------------------------------------------------------------------------------
 # Activate K8S Auto Completion
