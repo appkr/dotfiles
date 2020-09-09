@@ -2,20 +2,14 @@
 # Local bin directories before anything else
 #-------------------------------------------------------------------------------
 
-PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-
-#-------------------------------------------------------------------------------
-# Load Node global installed binaries
-#-------------------------------------------------------------------------------
-
-PATH="/usr/local/opt/node@10/bin:$PATH"
+PATH="/usr/local/sbin:$PATH"
 
 #-------------------------------------------------------------------------------
 # Use project specific binaries before global ones
 #-------------------------------------------------------------------------------
 
-PATH="node_modules/.bin:vendor/bin:$HOME/npm/bin:$PATH"
-export NODE_PATH="$NODE_PATH:$HOME/npm/lib/node_modules"
+PATH="$HOME/npm/bin:$PATH"
+export NODE_PATH="$HOME/npm/lib/node_modules"
 
 #-------------------------------------------------------------------------------
 # Make sure Homebrew PHP/Ruby is loaded
@@ -40,13 +34,13 @@ PATH=$GEM_HOME/bin:$PATH
 # Make sure coreutils are loaded before system commands
 #-------------------------------------------------------------------------------
 
-# PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 #-------------------------------------------------------------------------------
 # Composer
 #-------------------------------------------------------------------------------
 
-PATH="$PATH:$HOME/.composer/vendor/bin"
+# PATH="$PATH:$HOME/.composer/vendor/bin"
 
 #-------------------------------------------------------------------------------
 # Load custom commands

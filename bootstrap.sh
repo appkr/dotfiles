@@ -5,17 +5,16 @@
 # Thanks Mathias Bynens! https://mths.be/osx
 #-------------------------------------------------------------------------------
 
-#-------------------------------------------------------------------------------
-# Set temporary variable
-#-------------------------------------------------------------------------------
-
 DOTFILES=$HOME/dotfiles
+CASK_ARGS='--appdir="/Applications"'
 
 #-------------------------------------------------------------------------------
-# Update dotfiles itself first
+# Update dotfiles itself
 #-------------------------------------------------------------------------------
 
-[ -d "$DOTFILES/.git" ] && git --work-tree="$DOTFILES" --git-dir="$DOTFILES/.git" pull origin master
+if [ -d "$DOTFILES/.git" ]; then
+  git --work-tree="$DOTFILES" --git-dir="$DOTFILES/.git" pull origin master
+fi
 
 #-------------------------------------------------------------------------------
 # Check for Homebrew and install if we don't have it
@@ -26,19 +25,58 @@ if test ! $(which brew); then
 fi
 
 #-------------------------------------------------------------------------------
-# Update Homebrew recipes
+# Install executables and libraries
 #-------------------------------------------------------------------------------
 
-brew update
+brew install bash
+brew install zsh
+brew install zsh-completions
+brew install coreutils
+brew install findutils
+brew install gnu-sed
+brew install awscli
+brew install aws-elasticbeanstalk
+brew install git
+brew install htop
+brew install httpie
+brew install jq
+brew install kubectl
+brew install openssl
+brew install tcpdump
+brew install tree
+brew install watch
+brew install wget
+brew install yarn
+brew install youtube-dl
+brew install openapi-generator
+brew install aws-iam-authenticator
+brew install speedtest-cli
 
-#-------------------------------------------------------------------------------
-# Install all our dependencies with bundle (See Brewfile)
-#-------------------------------------------------------------------------------
+brew install composer
+brew install phpunit
 
-brew tap homebrew/bundle
-brew bundle --file=$DOTFILES/Brewfile # Install binary & applications
-brew cleanup
-brew cask cleanup
+brew install ruby
+brew install rbenv
+
+brew install gradle
+brew install maven
+brew install sbt
+brew install jenv
+
+brew cask install adoptopenjdk/openjdk/adoptopenjdk $CASK_ARGS
+brew cask install adoptopenjdk11 $CASK_ARGS
+brew cask install docker $CASK_ARGS
+brew cask install firefox $CASK_ARGS
+brew cask install google-chrome $CASK_ARGS
+brew cask install google-backup-and-sync $CASK_ARGS
+brew cask install intellij-idea $CASK_ARGS
+brew cask install iterm2 $CASK_ARGS
+brew cask install postman $CASK_ARGS
+brew cask install obs $CASK_ARGS
+brew cask install slack $CASK_ARGS
+brew cask install sublime-text $CASK_ARGS
+brew cask install wireshark $CASK_ARGS
+brew cask install font-source-code-pro $CASK_ARGS
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration
@@ -68,15 +106,10 @@ git clone git@github.com:powerline/fonts.git && bash fonts/install.sh
 sleep 3
 rm -rf fonts
 
-git clone https://github.com/jhipster/jhipster-oh-my-zsh-plugin.git $HOME/.oh-my-zsh/custom/plugins/jhipster
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 #-------------------------------------------------------------------------------
-# Install & execute profile
-#-------------------------------------------------------------------------------
-
-# Always prefer dotfiles' .zshrc
-ln -nfs $DOTFILES/.zshrc $HOME/.zshrc
-
+# Vim setting
 #-------------------------------------------------------------------------------
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -98,14 +131,15 @@ composer global require \
     nesbot/carbon \
     ramsey/uuid
 
+mkdir $HOME/.config/psysh
 ln -nfs $DOTFILES/psysh/config.php $HOME/.config/psysh/config.php
 
 #-------------------------------------------------------------------------------
 # Install global JavaScript tools
 #-------------------------------------------------------------------------------
+
+npm config set prefix $HOME/npm
 yarn global add redoc
-# npm install gitbook-cli --global --save
-npm config set prefix ~/npm
 
 #-------------------------------------------------------------------------------
 # Install Rails & Jekyll
@@ -114,10 +148,24 @@ npm config set prefix ~/npm
 gem install pry rails jekyll bundler
 
 #-------------------------------------------------------------------------------
+# Install jshell
+#-------------------------------------------------------------------------------
+
+git clone git@github.com:appkr/jsh.git $HOME/jsh
+
+#-------------------------------------------------------------------------------
 # Source profile
 #-------------------------------------------------------------------------------
 
+ln -nfs $DOTFILES/.zshrc $HOME/.zshrc
 source $HOME/.zshrc
+
+#-------------------------------------------------------------------------------
+# Enable jenv
+#-------------------------------------------------------------------------------
+
+jenv add $(javahome 1.8)
+jenv add $(javahome 11)
 
 #-------------------------------------------------------------------------------
 # Set OS X preferences
@@ -128,6 +176,6 @@ source $HOME/.zshrc
 if [[ ! -d $HOME/Library/KeyBindings ]]; then
     mkdir -p $HOME/Library/KeyBindings
 fi
-cp $DOTFILES/mac/DefaultkeyBinding.dict
+cp $DOTFILES/mac/DefaultkeyBinding.dict $HOME/Library/KeyBindings/
 
 source $DOTFILES/.osx

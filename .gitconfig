@@ -6,7 +6,7 @@
 	user = appkr
 	email = juwonkim@me.com
 	editor = vim
-	excludesfile = /Users/juwon.kim/dotfiles/.gitignore_global
+	excludesfile = /Users/appkr/dotfiles/.gitignore_global
 	precomposeunicode = true
 	quotepath = false
 
