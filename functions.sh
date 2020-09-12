@@ -449,9 +449,7 @@ function kibana() {
     echo "  e.g. kibana p"
     echo ""
     echo "Avaliable contexts:"
-    echo "  q for QA"
-    echo "  p for Prod"
-    echo "  tms for tms"
+    echo "  'q' for vroong-qa, 'p' for vroong-prod, 'tms-dev', 'tms-qa', 'tms-prod'"
     return 0;
   fi;
 
@@ -467,9 +465,16 @@ function kibana() {
           open https://localhost:9600/_plugin/kibana
           ssh vroong.elk.prod -N -v
           ;;
-      tms)
-          open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now%2Fd,to:now%2Fd))&_a=(columns:!(agent.hostname,message,traceId),index:c98f44e0-a55e-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
+      tms-dev)
+          open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:d6781ae0-a727-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
           ssh tms.elk.dev -N -v
+          ;;
+      tms-qa)
+          open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:cad582d0-b76d-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
+          ssh tms.elk.dev -N -v
+          ;;
+      tms-prod)
+          open "https://kibana.meshtools.io/s/tms/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(level,message,traceId),filters:!(),index:c5bd0410-eb63-11ea-b2f5-3f2fe4fd70f4,interval:auto,query:(language:kuery,query:''),sort:!())"
           ;;
       *)
           echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
