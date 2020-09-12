@@ -531,17 +531,13 @@ function tunnel() {
 # K8S
 #-------------------------------------------------------------------------------
 
-function proxy() {
+function ctx() {
   if [ "$1" = "" ]; then
-    echo "Switch kubernetes context and open proxy"
+    echo "Switch kubernetes context"
     echo ""
     echo "Usage:"
-    echo "  proxy <context>"
-    echo "  e.g. proxy d"
-    echo "  e.g. proxy q1"
-    echo "  e.g. proxy q2"
-    echo "  e.g. proxy q3"
-    echo "  e.g. proxy p"
+    echo "  ctx <context>"
+    echo "  e.g. ctx vroong-dev1"
     echo ""
     echo "Avaliable contexts:"
     kubectl config get-contexts
@@ -550,31 +546,7 @@ function proxy() {
 
   local CONTEXT="$1"
   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
-  case "${CONTEXT}" in
-    [d]|eks.dev)
-        kubectl config use-context eks.dev
-        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep "default" | awk '{print $1}')
-        ;;
-    q1|eks.qa1)
-        kubectl config use-context eks.qa1
-        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep "default" | awk '{print $1}')
-        ;;
-    q2|eks.qa2)
-        kubectl config use-context eks.qa2
-        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep "default" | awk '{print $1}')
-        ;;
-    q3|eks.qa3)
-        kubectl config use-context eks.qa3
-        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep "default" | awk '{print $1}')
-        ;;
-    p)
-        kubectl config use-context eks.prod
-        kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep "default" | awk '{print $1}')
-        ;;
-    *)
-        echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
-        ;;
-  esac
+  kubectl config use-context $CONTEXT
 }
 
 function klogs() {
