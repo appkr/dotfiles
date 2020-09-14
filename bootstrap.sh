@@ -50,6 +50,7 @@ brew install youtube-dl
 brew install openapi-generator
 brew install aws-iam-authenticator
 brew install speedtest-cli
+brew install colordiff
 
 brew install composer
 brew install phpunit
