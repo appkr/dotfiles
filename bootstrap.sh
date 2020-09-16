@@ -76,6 +76,7 @@ brew cask install obs
 brew cask install slack
 brew cask install sublime-text
 brew cask install wireshark
+brew cask install tableplus
 brew cask install font-source-code-pro
 
 #-------------------------------------------------------------------------------
