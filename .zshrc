@@ -141,4 +141,16 @@ source <(kubectl completion zsh)
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+#-------------------------------------------------------------------------------
+# Prefer zsh-completions
+# @see https://stackoverflow.com/a/26479426
+#-------------------------------------------------------------------------------
 
+if type brew &>/dev/null; then
+  PATH=$(brew --prefix)/share/zsh-completions:$PATH
+  if [ -f "$HOME/.zcompdump" ]; then
+    rm -f ~/.zcompdump
+  fi
+  autoload -Uz compinit
+  compinit
+fi
