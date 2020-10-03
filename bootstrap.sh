@@ -58,6 +58,9 @@ brew install phpunit
 brew install ruby
 brew install rbenv
 
+brew install python
+brew install pyenv
+
 brew install gradle
 brew install maven
 brew install sbt
@@ -167,10 +170,16 @@ source $HOME/.zshrc
 
 jenv add $(javahome 1.8)
 jenv add $(javahome 11)
+
 # `rbenv install -l` list installed versions
 # `rbenv install <version>` to install a specific version
 # `rbenv shell <version>` to specify ruby version used in shedll
 # `rbenv global <version>` to set global version
+
+# `pyenv install -l` list installed versions
+# `pyenv install <version>` to install a specific version
+# `pyenv shell <version>` to specify ruby version used in shedll
+# `pyenv global <version>` to set global version
 
 #-------------------------------------------------------------------------------
 # Set OS X preferences

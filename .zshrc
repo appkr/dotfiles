@@ -135,11 +135,12 @@ unset files file;
 source <(kubectl completion zsh)
 
 #-------------------------------------------------------------------------------
-# Activate jenv & rbenv
+# Activate jenv & rbenv & pyenv
 #-------------------------------------------------------------------------------
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 #-------------------------------------------------------------------------------
 # Prefer zsh-completions
