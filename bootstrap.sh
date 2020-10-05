@@ -66,7 +66,7 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew cask install adoptopenjdk/openjdk/adoptopenjdk
+brew cask install adoptopenjdk/openjdk/adoptopenjdk8
 brew cask install adoptopenjdk11
 brew cask install docker
 brew cask install firefox
