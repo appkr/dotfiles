@@ -81,7 +81,6 @@ brew cask install sublime-text
 brew cask install wireshark
 brew cask install tableplus
 brew cask install homebrew/cask-fonts/font-source-code-pro
-brew cask install homebrew/cask-fonts/font-source-code-pro-for-powerline
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration
@@ -107,9 +106,9 @@ sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/to
 # Install Powerline theme
 # Neet to set font in iterm2 preferences
 wget https://raw.githubusercontent.com/jeremyFreeAgent/oh-my-zsh-powerline-theme/master/powerline.zsh-theme -O $HOME/.oh-my-zsh/themes/powerline.zsh-theme
-#git clone git@github.com:powerline/fonts.git && bash fonts/install.sh
-#sleep 3
-#rm -rf fonts
+git clone git@github.com:powerline/fonts.git && bash fonts/install.sh
+sleep 3
+rm -rf fonts
 
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
