@@ -54,7 +54,9 @@ brew install speedtest-cli
 brew install colordiff
 
 brew install composer
+brew install php
 brew install phpunit
+brew install brew-php-switcher
 
 brew install ruby
 brew install rbenv
