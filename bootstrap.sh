@@ -40,6 +40,7 @@ brew install htop
 brew install httpie
 brew install jq
 brew install kubectl
+brew install k9s
 brew install openssl
 brew install tcpdump
 brew install tree
