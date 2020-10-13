@@ -52,6 +52,9 @@ brew install openapi-generator
 brew install aws-iam-authenticator
 brew install speedtest-cli
 brew install colordiff
+brew install telnet
+brew install git-crypt
+brew install gnupg
 
 brew install composer
 brew install php
