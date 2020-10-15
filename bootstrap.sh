@@ -56,6 +56,7 @@ brew install telnet
 brew install git-crypt
 brew install gnupg
 brew install graphviz
+brew install deviceinsight/packages/kafkactl
 
 brew install composer
 brew install php
