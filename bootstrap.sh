@@ -55,6 +55,7 @@ brew install colordiff
 brew install telnet
 brew install git-crypt
 brew install gnupg
+brew install graphviz
 
 brew install composer
 brew install php
