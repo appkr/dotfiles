@@ -129,10 +129,11 @@ done;
 unset files file;
 
 #-------------------------------------------------------------------------------
-# Activate K8S Auto Completion
+# Activate kubectl, kafakctl Auto Completion
 #-------------------------------------------------------------------------------
 
 source <(kubectl completion zsh)
+source <(kafkactl completion zsh)
 
 #-------------------------------------------------------------------------------
 # Activate jenv & rbenv & pyenv
