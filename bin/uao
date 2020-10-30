@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+
+# script source @see https://gist.github.com/fuzzylimes/d45268c99fde3e8a1933b9bc1ac4faf2
+
+import sys
+import os
+import subprocess
+
+def execute(command):
+    print('Running: {}'.format(command))
+    return subprocess.check_call(command, shell=True)
+
+if __name__ == '__main__':
+
+    assert len(sys.argv) == 2 and sys.argv[1].endswith('.zip'), 'Must supply a single zip file to unpackage.'
+
+    fileName = sys.argv[1]
+    zipFile = os.path.abspath(sys.argv[1])                  # /Users/juwon.kim/Downloads/demo.zip
+
+    assert os.path.exists(zipFile), 'Provided file does not exist.'
+
+    try:
+        execute('unzip -a "{}"'.format(zipFile))
+    except:
+        sys.exit("Error while unzipping {}. Exiting.".format(fileName))
+
+    projectDir = os.path.basename(zipFile).split(".")[0]    # demo
+    dirName = os.path.dirname(zipFile)                      # /Users/juwon.kim/Downloads
+    gradle = os.path.join(dirName, projectDir, 'build.gradle')
+                                                            # /Users/juwon.kim/Downloads/demo/build.gradle
+    try:
+        execute('idea "{}"'.format(gradle))
+    except:
+        sys.exit("Unable to open build.gradle file.")
+
+    print("Deleting {}".format(zipFile))
+    os.remove(zipFile)
