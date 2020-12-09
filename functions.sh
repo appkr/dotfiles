@@ -432,7 +432,7 @@ function mp3() {
     echo "  mp3 <url>"
   fi;
 
-  youtube-dl --extract-audio --audio-format mp3
+  youtube-dl --extract-audio --audio-format mp3 $1
 }
 
 #-------------------------------------------------------------------------------
