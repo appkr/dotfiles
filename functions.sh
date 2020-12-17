@@ -596,3 +596,23 @@ function javahome() {
 
   /usr/libexec/java_home -v $1
 }
+
+#-------------------------------------------------------------------------------
+# git re-tag and push
+#-------------------------------------------------------------------------------
+
+function retag() {
+  if [ "$1" = "" ]; then
+    echo "git re-tag and push"
+    echo ""
+    echo "Usage:"
+    echo '  retag <tag_name>'
+    echo "  e.g. retag jenkins"
+    return 0;
+  fi;
+
+  git tag -d $1
+  git tag $1
+  git push origin :$1
+  git push --tags
+}
