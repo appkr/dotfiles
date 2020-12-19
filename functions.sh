@@ -598,10 +598,10 @@ function javahome() {
 }
 
 #-------------------------------------------------------------------------------
-# git re-tag and push
+# git move tag and push
 #-------------------------------------------------------------------------------
 
-function retag() {
+function mt() {
   if [ "$1" = "" ]; then
     echo "git re-tag and push"
     echo ""
@@ -611,8 +611,14 @@ function retag() {
     return 0;
   fi;
 
-  git tag -d $1
-  git tag $1
-  git push origin :$1
-  git push --tags
+  local found=$(git tag | grep "$1")
+  if [ "found" = "" ]; then
+    echo "tag \"$1\" does not exist!"
+    return 0;
+  else
+    git tag -d $1
+    git tag $1
+    git push origin :$1
+    git push origin $1
+  fi;
 }
