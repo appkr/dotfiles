@@ -94,4 +94,5 @@ alias primeenv="bastion-switcher"
 #-------------------------------------------------------------------------------
 
 alias k=kubectl
-alias kctl=kafkactl
+# for config file @see $HOME/.config/kafkactl/config.yml
+alias kf=kafkactl
