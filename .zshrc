@@ -155,4 +155,5 @@ if type brew &>/dev/null; then
   fi
   autoload -Uz compinit
   compinit
+  zmodload -i zsh/complist
 fi
