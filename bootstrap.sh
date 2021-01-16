@@ -58,6 +58,7 @@ brew install gnupg
 brew install graphviz
 brew install deviceinsight/packages/kafkactl
 brew install ffmpeg
+brew install dive
 
 brew install composer
 brew install php
