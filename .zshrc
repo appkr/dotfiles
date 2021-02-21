@@ -148,12 +148,12 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 # @see https://stackoverflow.com/a/26479426
 #-------------------------------------------------------------------------------
 
-if type brew &>/dev/null; then
-  PATH=$(brew --prefix)/share/zsh-completions:$PATH
-  if [ -f "$HOME/.zcompdump" ]; then
-    rm -f ~/.zcompdump
-  fi
-  autoload -Uz compinit
-  compinit
-  zmodload -i zsh/complist
-fi
+# if type brew &>/dev/null; then
+#   PATH=$(brew --prefix)/share/zsh-completions:$PATH
+#   if [ -f "$HOME/.zcompdump" ]; then
+#     rm -f ~/.zcompdump
+#   fi
+#   autoload -Uz compinit
+#   compinit
+#   zmodload -i zsh/complist
+# fi
