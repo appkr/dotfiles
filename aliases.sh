@@ -96,3 +96,9 @@ alias primeenv="bastion-switcher"
 alias k=kubectl
 # for config file @see $HOME/.config/kafkactl/config.yml
 alias kf=kafkactl
+
+#-------------------------------------------------------------------------------
+# ffplay
+#-------------------------------------------------------------------------------
+
+alias ff=ffplay -hide_banner -stats -i
