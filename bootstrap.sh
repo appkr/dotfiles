@@ -76,21 +76,21 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew cask install adoptopenjdk/openjdk/adoptopenjdk8
-brew cask install adoptopenjdk11
-brew cask install docker
-brew cask install firefox
-brew cask install google-chrome
-brew cask install google-backup-and-sync
-brew cask install intellij-idea
-brew cask install iterm2
-brew cask install postman
-brew cask install obs
-brew cask install slack
-brew cask install sublime-text
-brew cask install wireshark
-brew cask install tableplus
-brew cask install homebrew/cask-fonts/font-source-code-pro
+brew install adoptopenjdk/openjdk/adoptopenjdk8 --cask
+brew install adoptopenjdk11 --cask
+brew install docker --cask
+brew install firefox --cask
+brew install google-chrome --cask
+brew install google-backup-and-sync --cask
+brew install intellij-idea --cask
+brew install iterm2 --cask
+brew install postman --cask
+brew install obs --cask
+brew install slack --cask
+brew install sublime-text --cask
+brew install wireshark --cask
+brew install tableplus --cask
+brew install homebrew/cask-fonts/font-source-code-pro --cask
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration
