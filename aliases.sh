@@ -36,10 +36,10 @@ alias nah="git reset --hard HEAD"
 # Laravel
 #-------------------------------------------------------------------------------
 
-alias art="php artisan"
-alias artisan="php artisan"
-alias tinker="php artisan tinker"
-alias serve="php artisan serve"
+alias prime="docker exec -it prime"
+alias art="prime php artisan"
+alias artisan="prime php artisan"
+alias tinker="prime php artisan tinker"
 
 # for reference
 alias ebtinker='sudo -E -u webapp bash -c "HOME=/tmp; php /var/app/current/artisan tinker"'
