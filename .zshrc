@@ -141,7 +141,11 @@ source <(kafkactl completion zsh)
 
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv > /dev/null; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+fi
 
 #-------------------------------------------------------------------------------
 # Prefer zsh-completions

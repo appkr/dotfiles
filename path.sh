@@ -24,7 +24,7 @@ export NODE_PATH="$HOME/npm/lib/node_modules"
 
 # For old version of PHP @see https://gist.github.com/appkr/e90ddf378a28745fcd75c56a1fa9ba72
 # But following line is not required when brew-php-switcher is installed
-#export PATH="$(brew --prefix php)/bin:$PATH"
+export PATH="$(brew --prefix php)/bin:$PATH"
 
 PATH="$(brew --prefix ruby)/bin:$PATH"
 mkdir -p $HOME/gems
