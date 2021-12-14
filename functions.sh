@@ -630,3 +630,13 @@ function mt() {
     git push origin $1
   fi;
 }
+
+#-------------------------------------------------------------------------------
+# boot accountsbff
+#-------------------------------------------------------------------------------
+
+function accountsbff() {
+  echo "http://localhost:9800/login?client_id=563f32dc-2c32-4178-9134-64ed523c8391"
+  cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
+  cd -
+}
