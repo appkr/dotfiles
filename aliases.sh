@@ -36,20 +36,20 @@ alias nah="git reset --hard HEAD"
 # Laravel
 #-------------------------------------------------------------------------------
 
-alias prime="docker exec -it prime"
-alias art="prime php artisan"
-alias artisan="prime php artisan"
-alias tinker="prime php artisan tinker"
+# alias prime="docker exec -it prime"
+# alias art="prime php artisan"
+# alias artisan="prime php artisan"
+# alias tinker="prime php artisan tinker"
 
 # for reference
-alias ebtinker='sudo -E -u webapp bash -c "HOME=/tmp; php /var/app/current/artisan tinker"'
+# alias ebtinker='sudo -E -u webapp bash -c "HOME=/tmp; php /var/app/current/artisan tinker"'
 
 #-------------------------------------------------------------------------------
 # Symfony
 #-------------------------------------------------------------------------------
 
-alias console="php bin/console"
-alias con="php bin/console"
+# alias console="php bin/console"
+# alias con="php bin/console"
 
 #-------------------------------------------------------------------------------
 # PHP Development
@@ -65,7 +65,7 @@ alias pshell="psysh"
 #-------------------------------------------------------------------------------
 
 # TODO NEED TO FIX
-alias primeenv="bastion-switcher"
+# alias primeenv="bastion-switcher"
 
 #-------------------------------------------------------------------------------
 # AWS CW Logs

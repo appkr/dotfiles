@@ -6,7 +6,8 @@
 #-------------------------------------------------------------------------------
 
 export DOTFILES=$HOME/dotfiles
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 #-------------------------------------------------------------------------------
 # Update dotfiles itself
 #-------------------------------------------------------------------------------
@@ -76,21 +77,21 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew install adoptopenjdk/openjdk/adoptopenjdk8 --cask
-brew install adoptopenjdk11 --cask
-brew install docker --cask
-brew install firefox --cask
-brew install google-chrome --cask
-brew install google-backup-and-sync --cask
-brew install intellij-idea --cask
-brew install iterm2 --cask
-brew install postman --cask
-brew install obs --cask
-brew install slack --cask
-brew install sublime-text --cask
-brew install wireshark --cask
-brew install tableplus --cask
-brew install homebrew/cask-fonts/font-source-code-pro --cask
+brew install adoptopenjdk/openjdk/adoptopenjdk8
+brew install adoptopenjdk11
+brew install docker
+brew install firefox
+brew install google-chrome
+brew install google-backup-and-sync
+brew install intellij-idea
+brew install iterm2
+brew install postman
+brew install obs
+brew install slack
+brew install sublime-text
+brew install wireshark
+brew install tableplus
+brew install homebrew/cask-fonts/font-source-code-pro
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration

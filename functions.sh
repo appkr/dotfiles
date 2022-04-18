@@ -205,30 +205,30 @@ function dip() {
   docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
 }
 
-dsm() {
+function dsm() {
 	docker stop $1 && docker rm $1
 }
 
-drm() {
+function drm() {
 	#docker rm $(docker ps -a -q)
 	docker ps -a -q | xargs docker rm
 }
 
-drmi() {
+function drmi() {
 	docker images | grep '<none>' | \
 	awk '{ print $3 }' | \
 	xargs docker rmi
 }
 
-drun() {
+function drun() {
 	docker run --rm -t -i $@
 }
 
-drund() {
+function drund() {
 	docker run -d --name $@ $@
 }
 
-dbash() {
+function dbash() {
 	if [ $# -lt 1 ] ; then
 	  echo "Please provide a container id or name. Usage: dbash <containerIdOrName>"
 	else
@@ -236,11 +236,11 @@ dbash() {
 	fi;
 }
 
-dps() {
+function dps() {
 	docker exec $1 ps -f
 }
 
-dlogs() {
+function dlogs() {
   docker logs -f $1
 }
 
@@ -266,10 +266,10 @@ function version() {
 # Find dev1 DNS
 #-------------------------------------------------------------------------------
 
-function dev1dns() {
-  local RES=`cd $HOME/meshkorea/prime-dev1-server && eb health dev1-EBPrimeBackend | grep -E 'i-[a-z0-9]{17}' | awk '{ print $1 }' | xargs aws ec2 describe-instances --profile meshdev --instance-ids | grep PrivateDnsName | head -n 1 | tr -d '[:space:]'`
-  echo $RES
-}
+# function dev1dns() {
+#   local RES=`cd $HOME/meshkorea/prime-dev1-server && eb health dev1-EBPrimeBackend | grep -E 'i-[a-z0-9]{17}' | awk '{ print $1 }' | xargs aws ec2 describe-instances --profile meshdev --instance-ids | grep PrivateDnsName | head -n 1 | tr -d '[:space:]'`
+#   echo $RES
+# }
 
 #-------------------------------------------------------------------------------
 # Homebrew PHP Version Switcher
@@ -334,34 +334,34 @@ function e() {
 # Toggle Xdebug
 #-------------------------------------------------------------------------------
 
-function xd() {
-  local PHPINIPATH=$(php --ini | head -1 | cut -d ":" -f 2 | xargs echo)
-  local XDEBUGPATH=$(find "$PHPINIPATH" | grep xdebug)
+# function xd() {
+#   local PHPINIPATH=$(php --ini | head -1 | cut -d ":" -f 2 | xargs echo)
+#   local XDEBUGPATH=$(find "$PHPINIPATH" | grep xdebug)
 
-  if [ $XDEBUGPATH = "" ]; then
-      echo "Xdebug not found"
-      return 0;
-  fi;
+#   if [ $XDEBUGPATH = "" ]; then
+#       echo "Xdebug not found"
+#       return 0;
+#   fi;
 
-  local SUFFIX=".disabled"
-  local NEWPATH=""
-  local MESSAGE1=""
-  local MESSAGE3=""
+#   local SUFFIX=".disabled"
+#   local NEWPATH=""
+#   local MESSAGE1=""
+#   local MESSAGE3=""
 
-  if [[ "$XDEBUGPATH" =~ .*disabled$ ]]; then
-      NEWPATH=$(echo "${XDEBUGPATH%$SUFFIX}")
-      MESSAGE1="Changing state from \033[32mON\033[0m to \033[31mOFF\033[0m"
-      MESSAGE3="\033[32mXdebug is now ON\033[0m"
-  else
-      NEWPATH="${XDEBUGPATH}${SUFFIX}"
-      MESSAGE1="Changing state from \033[31mOFF\033[0m to \033[32mON\033[0m"
-      MESSAGE3="\033[31mXdebug is now OFF\033[0m"
-  fi;
+#   if [[ "$XDEBUGPATH" =~ .*disabled$ ]]; then
+#       NEWPATH=$(echo "${XDEBUGPATH%$SUFFIX}")
+#       MESSAGE1="Changing state from \033[32mON\033[0m to \033[31mOFF\033[0m"
+#       MESSAGE3="\033[32mXdebug is now ON\033[0m"
+#   else
+#       NEWPATH="${XDEBUGPATH}${SUFFIX}"
+#       MESSAGE1="Changing state from \033[31mOFF\033[0m to \033[32mON\033[0m"
+#       MESSAGE3="\033[31mXdebug is now OFF\033[0m"
+#   fi;
 
-  echo -e $MESSAGE1
-  sudo mv $XDEBUGPATH $NEWPATH
-  echo -e $MESSAGE3
-}
+#   echo -e $MESSAGE1
+#   sudo mv $XDEBUGPATH $NEWPATH
+#   echo -e $MESSAGE3
+# }
 
 #-------------------------------------------------------------------------------
 # Kill Port
@@ -447,141 +447,141 @@ function mp3() {
 # Kibana log
 #-------------------------------------------------------------------------------
 
-function kibana() {
-  if [ "$1" = "" ]; then
-    echo "Kibana log viewer"
-    echo ""
-    echo "Usage:"
-    echo "  kibana <context>"
-    echo "  e.g. kibana q"
-    echo "  e.g. kibana p"
-    echo ""
-    echo "Avaliable contexts:"
-    echo "  'q' for vroong-qa, 'p' for vroong-prod, 'tms-dev', 'tms-qa', 'tms-prod'"
-    return 0;
-  fi;
+# function kibana() {
+#   if [ "$1" = "" ]; then
+#     echo "Kibana log viewer"
+#     echo ""
+#     echo "Usage:"
+#     echo "  kibana <context>"
+#     echo "  e.g. kibana q"
+#     echo "  e.g. kibana p"
+#     echo ""
+#     echo "Avaliable contexts:"
+#     echo "  'q' for vroong-qa, 'p' for vroong-prod, 'tms-dev', 'tms-qa', 'tms-prod'"
+#     return 0;
+#   fi;
 
-  local CONTEXT="$1"
-  echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
+#   local CONTEXT="$1"
+#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
 
-  case "${CONTEXT}" in
-      [qQ])
-          open https://localhost:9500/_plugin/kibana
-          ssh vroong.elk.qa -N -v
-          ;;
-      [pP])
-          open https://localhost:9600/_plugin/kibana
-          ssh vroong.elk.prod -N -v
-          ;;
-      tms-dev)
-          open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:d6781ae0-a727-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
-          ssh tms.elk.dev -N -v
-          ;;
-      tms-qa)
-          open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:cad582d0-b76d-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
-          ssh tms.elk.dev -N -v
-          ;;
-      tms-prod)
-          open "https://kibana.meshtools.io/s/tms/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(level,message,traceId),filters:!(),index:c5bd0410-eb63-11ea-b2f5-3f2fe4fd70f4,interval:auto,query:(language:kuery,query:''),sort:!())"
-          ;;
-      *)
-          echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
-          ;;
-  esac
-}
+#   case "${CONTEXT}" in
+#       [qQ])
+#           open https://localhost:9500/_plugin/kibana
+#           ssh vroong.elk.qa -N -v
+#           ;;
+#       [pP])
+#           open https://localhost:9600/_plugin/kibana
+#           ssh vroong.elk.prod -N -v
+#           ;;
+#       tms-dev)
+#           open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:d6781ae0-a727-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
+#           ssh tms.elk.dev -N -v
+#           ;;
+#       tms-qa)
+#           open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:cad582d0-b76d-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
+#           ssh tms.elk.dev -N -v
+#           ;;
+#       tms-prod)
+#           open "https://kibana.meshtools.io/s/tms/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(level,message,traceId),filters:!(),index:c5bd0410-eb63-11ea-b2f5-3f2fe4fd70f4,interval:auto,query:(language:kuery,query:''),sort:!())"
+#           ;;
+#       *)
+#           echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
+#           ;;
+#   esac
+# }
 
 #-------------------------------------------------------------------------------
 # tunnel to kubernetes cluster
 #-------------------------------------------------------------------------------
 
-function tunnel() {
-  if [ "$1" = "" ]; then
-    echo "Create SSH tunnel to kubernetes cluster"
-    echo ""
-    echo "Usage:"
-    echo "  tunnel <context>"
-    echo "  e.g. tunnel d1"
-    echo "  e.g. tunnel q1"
-    echo "  e.g. tunnel q2"
-    echo "  e.g. tunnel q3"
-    echo "  e.g. tunnel p"
-    echo ""
-    echo "Avaliable contexts:"
-    echo "  d1 for dev1"
-    echo "  q1 for qa1"
-    echo "  q2 for qa2"
-    echo "  q3 for qa3"
-    echo "  p for prod"
-    return 0;
-  fi;
+# function tunnel() {
+#   if [ "$1" = "" ]; then
+#     echo "Create SSH tunnel to kubernetes cluster"
+#     echo ""
+#     echo "Usage:"
+#     echo "  tunnel <context>"
+#     echo "  e.g. tunnel d1"
+#     echo "  e.g. tunnel q1"
+#     echo "  e.g. tunnel q2"
+#     echo "  e.g. tunnel q3"
+#     echo "  e.g. tunnel p"
+#     echo ""
+#     echo "Avaliable contexts:"
+#     echo "  d1 for dev1"
+#     echo "  q1 for qa1"
+#     echo "  q2 for qa2"
+#     echo "  q3 for qa3"
+#     echo "  p for prod"
+#     return 0;
+#   fi;
 
-  local CONTEXT="$1"
-  echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
+#   local CONTEXT="$1"
+#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
 
-  case "${CONTEXT}" in
-      [dD]1)
-          ssh eks.dev -v -N -S none -o ControlMaster=no
-          ;;
-      [qQ][1])
-          ssh k8s.qa1 -v -N -S none -o ControlMaster=no
-          ;;
-      [qQ][2])
-          ssh k8s.qa2 -v -N -S none -o ControlMaster=no
-          ;;
-      [qQ][3])
-          ssh k8s.qa3 -v -N -S none -o ControlMaster=no
-          ;;
-      [pP])
-          ssh k8s.prod -v -N -S none -o ControlMaster=no
-          ;;
-      *)
-          echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
-          ;;
-  esac
-}
+#   case "${CONTEXT}" in
+#       [dD]1)
+#           ssh eks.dev -v -N -S none -o ControlMaster=no
+#           ;;
+#       [qQ][1])
+#           ssh k8s.qa1 -v -N -S none -o ControlMaster=no
+#           ;;
+#       [qQ][2])
+#           ssh k8s.qa2 -v -N -S none -o ControlMaster=no
+#           ;;
+#       [qQ][3])
+#           ssh k8s.qa3 -v -N -S none -o ControlMaster=no
+#           ;;
+#       [pP])
+#           ssh k8s.prod -v -N -S none -o ControlMaster=no
+#           ;;
+#       *)
+#           echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
+#           ;;
+#   esac
+# }
 
 #-------------------------------------------------------------------------------
 # K8S
 #-------------------------------------------------------------------------------
 
-function ctx() {
-  if [ "$1" = "" ]; then
-    echo "Switch kubernetes context"
-    echo ""
-    echo "Usage:"
-    echo "  ctx <context>"
-    echo "  e.g. ctx vroong-dev1"
-    echo ""
-    echo "Avaliable contexts:"
-    kubectl config get-contexts
-    return 0;
-  fi;
+# function ctx() {
+#   if [ "$1" = "" ]; then
+#     echo "Switch kubernetes context"
+#     echo ""
+#     echo "Usage:"
+#     echo "  ctx <context>"
+#     echo "  e.g. ctx vroong-dev1"
+#     echo ""
+#     echo "Avaliable contexts:"
+#     kubectl config get-contexts
+#     return 0;
+#   fi;
 
-  local CONTEXT="$1"
-  echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
-  kubectl config use-context $CONTEXT
-}
+#   local CONTEXT="$1"
+#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
+#   kubectl config use-context $CONTEXT
+# }
 
-function klogs() {
-  if [ "$1" = "" ]; then
-    echo "Tail pods logs"
-    echo ""
-    echo "Usage:"
-    echo "  klogs <app>"
-    echo "  e.g. klogs uaa"
-    echo ""
-    return 0;
-  fi;
+# function klogs() {
+#   if [ "$1" = "" ]; then
+#     echo "Tail pods logs"
+#     echo ""
+#     echo "Usage:"
+#     echo "  klogs <app>"
+#     echo "  e.g. klogs uaa"
+#     echo ""
+#     return 0;
+#   fi;
 
-  local APP="$1"
-  {
-    # local POD=$(kubectl get pods -l app=pointcharger -o jsonpath={.items..metadata.name})
-    kubectl logs -f -l app=$APP --all-containers
-  } || {
-    # kubectl get pods -o jsonpath='{.items[*].metadata.labels.app}' | grep $APP
-    kubectl get pods | { head -n 1; grep $APP }
-  }
-}
+#   local APP="$1"
+#   {
+#     # local POD=$(kubectl get pods -l app=pointcharger -o jsonpath={.items..metadata.name})
+#     kubectl logs -f -l app=$APP --all-containers
+#   } || {
+#     # kubectl get pods -o jsonpath='{.items[*].metadata.labels.app}' | grep $APP
+#     kubectl get pods | { head -n 1; grep $APP }
+#   }
+# }
 
 #-------------------------------------------------------------------------------
 # Java shell
@@ -635,8 +635,8 @@ function mt() {
 # boot accountsbff
 #-------------------------------------------------------------------------------
 
-function accountsbff() {
-  echo "http://localhost:9800/login?client_id=563f32dc-2c32-4178-9134-64ed523c8391"
-  cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
-  cd -
-}
+# function accountsbff() {
+#   echo "http://localhost:9800/login?client_id=563f32dc-2c32-4178-9134-64ed523c8391"
+#   cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
+#   cd -
+# }
