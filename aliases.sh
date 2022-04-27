@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 
 # List current directory
-alias ll="$(brew --prefix coreutils)/libexec/gnubin/ls -ahlF --color --group-directories-first"
+alias ll="ls -ahlF --color"
 
 #-------------------------------------------------------------------------------
 # Homebrew

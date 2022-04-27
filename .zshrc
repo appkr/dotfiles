@@ -133,7 +133,8 @@ unset files file;
 #-------------------------------------------------------------------------------
 
 source <(kubectl completion zsh)
-source <(kafkactl completion zsh)
+#not working in m1
+#source <(kafkactl completion zsh)
 
 #-------------------------------------------------------------------------------
 # Activate jenv & rbenv & pyenv
@@ -148,16 +149,7 @@ if which pyenv > /dev/null; then
 fi
 
 #-------------------------------------------------------------------------------
-# Prefer zsh-completions
-# @see https://stackoverflow.com/a/26479426
+# homebrew for apple silicon
 #-------------------------------------------------------------------------------
 
-# if type brew &>/dev/null; then
-#   PATH=$(brew --prefix)/share/zsh-completions:$PATH
-#   if [ -f "$HOME/.zcompdump" ]; then
-#     rm -f ~/.zcompdump
-#   fi
-#   autoload -Uz compinit
-#   compinit
-#   zmodload -i zsh/complist
-# fi
+eval "$(/opt/homebrew/bin/brew shellenv)"

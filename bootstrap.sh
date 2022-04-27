@@ -6,7 +6,6 @@
 #-------------------------------------------------------------------------------
 
 export DOTFILES=$HOME/dotfiles
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 #-------------------------------------------------------------------------------
 # Update dotfiles itself
@@ -21,7 +20,7 @@ fi
 #-------------------------------------------------------------------------------
 
 if test ! $(which brew); then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 #-------------------------------------------------------------------------------
@@ -35,7 +34,6 @@ brew install coreutils
 brew install findutils
 brew install gnu-sed
 brew install awscli
-brew install aws-elasticbeanstalk
 brew install git
 brew install htop
 brew install httpie
@@ -57,9 +55,9 @@ brew install telnet
 brew install git-crypt
 brew install gnupg
 brew install graphviz
-brew install deviceinsight/packages/kafkactl
+#not working in m1
+#brew install deviceinsight/packages/kafkactl
 brew install ffmpeg
-brew install dive
 
 brew install composer
 brew install php
@@ -82,13 +80,15 @@ brew install adoptopenjdk11
 brew install docker
 brew install firefox
 brew install google-chrome
-brew install google-backup-and-sync
 brew install intellij-idea
 brew install iterm2
+brew install jmc
 brew install postman
 brew install obs
 brew install slack
 brew install sublime-text
+brew install visual-studio-code
+brew install visualvm
 brew install wireshark
 brew install tableplus
 brew install homebrew/cask-fonts/font-source-code-pro
