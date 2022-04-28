@@ -1,8 +1,8 @@
 #-------------------------------------------------------------------------------
-# Local bin directories before anything else
+# Java version
 #-------------------------------------------------------------------------------
 
-PATH="/usr/local/sbin:$PATH"
+PATH="$HOME/.jenv/bin:$PATH"
 
 #-------------------------------------------------------------------------------
 # Use project specific binaries before global ones
