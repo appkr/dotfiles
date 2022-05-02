@@ -77,7 +77,8 @@ brew install jenv
 
 brew install adoptopenjdk/openjdk/adoptopenjdk8
 brew install adoptopenjdk11
-brew install docker
+brew install docker --cask
+brew install docker-credential-helper
 brew install firefox
 brew install google-chrome
 brew install intellij-idea
