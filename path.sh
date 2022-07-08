@@ -39,16 +39,9 @@ PATH=$GEM_HOME/bin:$PATH
 PATH="$(/opt/homebrew/bin/brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 #-------------------------------------------------------------------------------
-# Composer
+# Go
 #-------------------------------------------------------------------------------
 
-# PATH="$PATH:$HOME/.composer/vendor/bin"
-
-#-------------------------------------------------------------------------------
-# Load custom commands
-#-------------------------------------------------------------------------------
-
-PATH="/usr/local/opt/icu4c/bin:$PATH"
-PATH="/usr/local/opt/icu4c/sbin:$PATH"
+PATH=$GOPATH:$PATH
 
 export PATH="$DOTFILES/bin:$PATH"

@@ -16,3 +16,5 @@ export EDITOR=vim
 #-------------------------------------------------------------------------------
 
 # export MONO_GAC_PREFIX="/usr/local"
+
+export GOPATH=$HOME/go
