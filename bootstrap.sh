@@ -79,8 +79,9 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew install adoptopenjdk/openjdk/adoptopenjdk8
-brew install adoptopenjdk11
+brew install corretto8
+brew install corretto11
+brew install corretto17
 brew install docker
 brew install firefox
 brew install google-chrome
