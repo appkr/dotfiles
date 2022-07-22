@@ -78,8 +78,9 @@ brew install maven
 brew install sbt
 brew install jenv
 
-brew install adoptopenjdk/openjdk/adoptopenjdk8
-brew install adoptopenjdk11
+brew install corretto8
+brew install corretto11
+brew install corretto17
 brew install docker --cask
 brew install docker-credential-helper
 brew install firefox
