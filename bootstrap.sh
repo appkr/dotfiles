@@ -35,6 +35,7 @@ brew install findutils
 brew install gnu-sed
 brew install awscli
 brew install git
+brew install ghz
 brew install htop
 brew install httpie
 brew install jq
