@@ -1,3 +1,51 @@
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+NC='\033[0m'
+
+ensure_dependency() {
+  if ! which "$1" &>/dev/null ; then
+    echo "$1 not found"
+    exit 1
+  fi
+}
+
+confirm() {
+  read -r -p "${1:-Are you sure? [y/N]} " response
+  case "$response" in
+   [yY])
+     true
+     ;;
+   *)
+     false
+     ;;
+  esac
+}
+
+print_bold() {
+  if [ ! -z "$1" ]; then
+    echo -e "${BOLD}${1}${NC}"
+  fi
+}
+
+print_red() {
+  if [ ! -z "$1" ]; then
+    echo -e "${RED}${1}${NC}"
+  fi
+}
+
+print_green() {
+  if [ ! -z "$1" ]; then
+    echo -e "${GREEN}${1}${NC}"
+  fi
+}
+
+print_yellow() {
+  if [ ! -z "$1" ]; then
+    echo -e "${YELLOW}${1}${NC}"
+  fi
+}
+
 #-------------------------------------------------------------------------------
 # Shell function chestsheet
 #-------------------------------------------------------------------------------
@@ -611,11 +659,11 @@ function javahome() {
 
 function mt() {
   if [ "$1" = "" ]; then
-    echo "git re-tag and push"
+    echo "change git tag and push"
     echo ""
     echo "Usage:"
-    echo '  retag <tag_name>'
-    echo "  e.g. retag jenkins"
+    echo '  mt <tag_name>'
+    echo "  e.g. mt jenkins"
     return 0;
   fi;
 
@@ -640,3 +688,54 @@ function mt() {
 #   cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
 #   cd -
 # }
+
+#-------------------------------------------------------------------------------
+# sync neogeorefiner
+#-------------------------------------------------------------------------------
+
+function sync_refiner() {
+  if [ "$1" = "" ]; then
+    echo "neogeorefiner 이미지를 최신화합니다"
+    echo ""
+    echo "Usage:"
+    echo "  $0 <tag_name>"
+    echo "  e.g. $0 etpost-20220915030019"
+    return 0;
+  fi;
+
+  container=$(docker inspect neogeorefiner --format "{{json .State.Status}}" 2> /dev/null | xargs)
+  if [ "running" = "$container" ]; then
+    print_red "neogeorefiner docker container is running"
+    echo ""
+    print_bold "  cd vroong-neogeo && ./gradlew composeDown"
+    echo ""
+    return 0;
+  fi
+
+  print_red "기존 이미지를 지울까요? [y/N]} "
+  read -r response
+  case "$response" in
+   [yY])
+     candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
+     candidate2=$(docker image ls --filter=reference="200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
+     docker image rm $candidate1 $candidate2 --force
+     ;;
+  esac
+
+  print_green "ECR에 로그인합니다"
+  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
+
+  echo ""
+
+  print_green "이미지를 내려받습니다"
+  docker pull 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
+
+  echo ""
+
+  print_green "neogeorefiner:latest 태그를 부여합니다"
+  docker tag 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
+
+  echo ""
+
+  print_green "성공"
+}
