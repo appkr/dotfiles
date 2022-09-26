@@ -51,4 +51,4 @@ PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 PATH="/usr/local/opt/icu4c/bin:$PATH"
 PATH="/usr/local/opt/icu4c/sbin:$PATH"
 
-export PATH="$DOTFILES/bin:$PATH"
+export PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
