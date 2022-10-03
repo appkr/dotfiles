@@ -11,7 +11,7 @@
 
 - Install xcode command line tools
 ```bash
-$ xcode-select -p
+$ sudo xcode-select --install
 ```
 
 - Copy files from the backup, including ssh keys
