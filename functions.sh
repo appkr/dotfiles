@@ -739,3 +739,19 @@ function sync_refiner() {
 
   print_green "성공"
 }
+
+#-------------------------------------------------------------------------------
+# k8s pod log
+#-------------------------------------------------------------------------------
+
+function klogs() {
+  if [ "$1" = "" ]; then
+    echo "view k8s pod logs"
+    echo ""
+    echo "Usage:"
+    echo '  klogs <POD_ID>'
+    return 0;
+  fi;
+
+  logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+}
