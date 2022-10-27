@@ -753,5 +753,5 @@ function klogs() {
     return 0;
   fi;
 
-  logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+  kubectl logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
