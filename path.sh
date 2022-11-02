@@ -44,4 +44,4 @@ PATH="$(/opt/homebrew/bin/brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 PATH=$GOPATH:$PATH
 
-export PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+export PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
