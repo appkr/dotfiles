@@ -44,4 +44,24 @@ PATH="$(/opt/homebrew/bin/brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 PATH=$GOPATH:$PATH
 
-export PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+#-------------------------------------------------------------------------------
+# Load custom commands
+#-------------------------------------------------------------------------------
+
+PATH="/usr/local/opt/icu4c/bin:$PATH"
+PATH="/usr/local/opt/icu4c/sbin:$PATH"
+
+#-------------------------------------------------------------------------------
+# Load mysql-client
+#-------------------------------------------------------------------------------
+
+PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+#-------------------------------------------------------------------------------
+# Load Kubernetes
+#-------------------------------------------------------------------------------
+
+PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$PATH"
+
+export PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+
