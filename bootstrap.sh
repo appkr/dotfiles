@@ -80,6 +80,8 @@ brew install maven
 brew install sbt
 brew install jenv
 
+brew install mysql-client
+
 brew install corretto8
 brew install corretto11
 brew install corretto17
