@@ -27,79 +27,76 @@ fi
 # Install executables and libraries
 #-------------------------------------------------------------------------------
 
-brew install bash
-brew install zsh
-brew install zsh-completions
-brew install coreutils
-brew install findutils
-brew install gnu-sed
-brew install awscli
-brew install git
-brew install ghz
-brew install htop
-brew install httpie
-brew install jq
-brew install kubectl
-brew install k9s
-brew install openssl
-brew install tcpdump
-brew install tree
-brew install watch
-brew install wget
-brew install yarn
-brew install youtube-dl
-brew install openapi-generator
-brew install aws-iam-authenticator
-brew install speedtest-cli
-brew install colordiff
-brew install telnet
-brew install git-crypt
-brew install gnupg
-brew install graphviz
-#not working in m1
-#brew install deviceinsight/packages/kafkactl
-brew install ffmpeg
-brew install dive
-brew install protobuf
-brew install grpcurl
+arch -arm64 brew install bash
+arch -arm64 brew install zsh
+arch -arm64 brew install zsh-completions
+arch -arm64 brew install coreutils
+arch -arm64 brew install findutils
+arch -arm64 brew install gnu-sed
+arch -arm64 brew install awscli
+arch -arm64 brew install git
+arch -arm64 brew install ghz
+arch -arm64 brew install htop
+arch -arm64 brew install httpie
+arch -arm64 brew install jq
+arch -arm64 brew install kubectl
+arch -arm64 brew install k9s
+arch -arm64 brew install openssl
+arch -arm64 brew install tcpdump
+arch -arm64 brew install tree
+arch -arm64 brew install watch
+arch -arm64 brew install wget
+arch -arm64 brew install yarn
+arch -arm64 brew install youtube-dl
+arch -arm64 brew install openapi-generator
+arch -arm64 brew install aws-iam-authenticator
+arch -arm64 brew install speedtest-cli
+arch -arm64 brew install colordiff
+arch -arm64 brew install telnet
+arch -arm64 brew install git-crypt
+arch -arm64 brew install gnupg
+arch -arm64 brew install graphviz
+arch -arm64 brew install ffmpeg
+arch -arm64 brew install dive
+arch -arm64 brew install protobuf
+arch -arm64 brew install grpcurl
 
-brew install composer
-brew install php
-brew install phpunit
-brew install brew-php-switcher
+arch -arm64 brew install composer
+arch -arm64 brew install php
+arch -arm64 brew install phpunit
+arch -arm64 brew install brew-php-switcher
 
-brew install ruby
-brew install rbenv
+arch -arm64 brew install ruby
+arch -arm64 brew install rbenv
+arch -arm64 brew install python
+arch -arm64 brew install pyenv
 
-brew install python
-brew install pyenv
+arch -arm64 brew install gradle
+arch -arm64 brew install maven
+arch -arm64 brew install sbt
+arch -arm64 brew install jenv
 
-brew install gradle
-brew install maven
-brew install sbt
-brew install jenv
+arch -arm64 brew install mysql-client
 
-brew install mysql-client
-
-brew install corretto8
-brew install corretto11
-brew install corretto17
-brew install docker --cask
-brew install docker-credential-helper
-brew install firefox
-brew install google-chrome
-brew install intellij-idea
-brew install iterm2
-brew install jmc
-brew install postman
-brew install obs
-brew install slack
-brew install sublime-text
-brew install visual-studio-code
-brew install visualvm
-brew install wireshark
-brew install tableplus
-brew install homebrew/cask-fonts/font-source-code-pro
+arch -arm64 brew install corretto8
+arch -arm64 brew install corretto11
+arch -arm64 brew install corretto17
+arch -arm64 brew install docker --cask
+arch -arm64 brew install docker-credential-helper
+arch -arm64 brew install firefox
+arch -arm64 brew install google-chrome
+arch -arm64 brew install intellij-idea
+arch -arm64 brew install iterm2
+arch -arm64 brew install jmc
+arch -arm64 brew install postman
+arch -arm64 brew install obs
+arch -arm64 brew install slack
+arch -arm64 brew install sublime-text
+arch -arm64 brew install visual-studio-code
+arch -arm64 brew install visualvm
+arch -arm64 brew install wireshark
+arch -arm64 brew install tableplus
+arch -arm64 brew install homebrew/cask-fonts/font-source-code-pro
 
 #-------------------------------------------------------------------------------
 # Install global Git configuration

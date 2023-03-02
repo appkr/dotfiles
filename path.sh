@@ -61,7 +61,7 @@ PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 # Load Kubernetes
 #-------------------------------------------------------------------------------
 
-PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$PATH"
+PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$PATH"
 
-export PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+export PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
 
