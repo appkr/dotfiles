@@ -297,7 +297,7 @@ function dlogs() {
     return 0;
   fi;
 
-  doker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+  docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
 #-------------------------------------------------------------------------------
