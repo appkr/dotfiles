@@ -289,7 +289,15 @@ function dps() {
 }
 
 function dlogs() {
-  docker logs -f $1
+  if [ "$1" = "" ]; then
+    echo "view docker container logs"
+    echo ""
+    echo "Usage:"
+    echo '  dlogs <CONTAINER_ID>'
+    return 0;
+  fi;
+
+  doker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
 #-------------------------------------------------------------------------------
