@@ -199,6 +199,15 @@ jenv add $(javahome 11)
 # `pyenv global <version>` to set global version
 
 #-------------------------------------------------------------------------------
+# Install kubectl plugin: node-shell
+# see https://github.com/kvaps/kubectl-node-shell
+#-------------------------------------------------------------------------------
+
+curl -LO https://github.com/kvaps/kubectl-node-shell/raw/master/kubectl-node_shell
+chmod +x ./kubectl-node_shell
+sudo mv ./kubectl-node_shell /usr/local/bin/kubectl-node_shell
+
+#-------------------------------------------------------------------------------
 # Set OS X preferences
 # We will run this last because this will reload the shell
 # Fix backtick(`) issue @see https://ani2life.com/wp/?p=1753

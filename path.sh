@@ -63,4 +63,4 @@ PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$PATH"
 
-export PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+export PATH="$DOTFILES/bin:$PATH"
