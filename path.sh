@@ -63,5 +63,15 @@ PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$PATH"
 
-export PATH="$(/opt/homebrew/bin/brew --prefix kubernetes-cli@1.22)/bin:$DOTFILES/bin:$PATH"
+#-------------------------------------------------------------------------------
+# CLang
+#-------------------------------------------------------------------------------
+
+PATH="$(/opt/homebrew/bin/brew --prefix llvm)/bin:$PATH"
+
+#-------------------------------------------------------------------------------
+# Return
+#-------------------------------------------------------------------------------
+
+export PATH="$DOTFILES/bin:$PATH"
 
