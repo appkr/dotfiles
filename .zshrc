@@ -106,7 +106,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 #-------------------------------------------------------------------------------
 
-plugins=(git git-extras npm composer docker docker-compose)
+plugins=(git git-extras npm composer docker docker-compose kubectl)
 
 #-------------------------------------------------------------------------------
 # Activate Oh-My-Zsh
@@ -161,3 +161,6 @@ fi
 #   compinit
 #   zmodload -i zsh/complist
 # fi
+
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $DOTFILES/kubectl.zsh
