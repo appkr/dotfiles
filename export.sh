@@ -16,3 +16,6 @@ export EDITOR=vim
 #-------------------------------------------------------------------------------
 
 # export MONO_GAC_PREFIX="/usr/local"
+
+export GOROOT=~/sdk/go1.20.4
+export GOPATH=~/go

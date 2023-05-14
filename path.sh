@@ -63,4 +63,10 @@ PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$PATH"
 
+#-------------------------------------------------------------------------------
+# Golang
+#-------------------------------------------------------------------------------
+
+PATH="${HOME}/sdk/go1.20.4/bin:$PATH"
+
 export PATH="$DOTFILES/bin:$PATH"
