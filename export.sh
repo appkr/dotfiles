@@ -17,4 +17,5 @@ export EDITOR=vim
 
 # export MONO_GAC_PREFIX="/usr/local"
 
+export GOROOT=$(/opt/homebrew/bin/brew --prefix go)
 export GOPATH=$HOME/go
