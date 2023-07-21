@@ -633,7 +633,7 @@ mp3() {
 #-------------------------------------------------------------------------------
 
 jsh() {
-  cd $HOME/jsh && mvn jshell:run -Djshell.scripts="startup.jsh"
+  cd $HOME/jsh && ./gradlew --no-daemon --console plain jshell
   cd -
 }
 
