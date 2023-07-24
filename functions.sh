@@ -47,7 +47,7 @@ print_yellow() {
 }
 
 #-------------------------------------------------------------------------------
-# Shell function chestsheet
+# Shell chestsheet
 #-------------------------------------------------------------------------------
 # $* : all args
 # $# : number of args
@@ -58,7 +58,7 @@ print_yellow() {
 # Create a new directory and enter it
 #-------------------------------------------------------------------------------
 
-function mkd() {
+mkd() {
   mkdir -p "$@" && cd "$_";
 }
 
@@ -66,7 +66,7 @@ function mkd() {
 # Open man page as PDF
 #-------------------------------------------------------------------------------
 
-function manpdf() {
+manpdf() {
   man -t "${1}" | open -f -a /Applications/Preview.app/
 }
 
@@ -102,7 +102,7 @@ extract() {
 # Determine size of a file or total size of a directory
 #-------------------------------------------------------------------------------
 
-function fs() {
+fs() {
   if du -b /dev/null > /dev/null 2>&1; then
     local arg=-sbh;
   else
@@ -120,7 +120,7 @@ function fs() {
 # Create a data URL from a file
 #-------------------------------------------------------------------------------
 
-function dataurl() {
+dataurl() {
   local mimeType=$(file -b --mime-type "$1");
   if [[ $mimeType == text/* ]]; then
     mimeType="${mimeType};charset=utf-8";
@@ -134,7 +134,7 @@ function dataurl() {
 # (Requires PHP 5.4.0+.)
 #-------------------------------------------------------------------------------
 
-function phpserver() {
+phpserver() {
   echo -e "\033[32mSwitching PHP runtime version\033[0m"
   echo ""
   echo "Usage:"
@@ -151,7 +151,7 @@ function phpserver() {
 # Convert EUC-KR to UTF-8
 #-------------------------------------------------------------------------------
 
-function enc() {
+enc() {
   iconv -c -f EUC-KR -t UTF-8 $1 > utf8_"$1"
 }
 
@@ -159,7 +159,7 @@ function enc() {
 # UTF-8-encode a string of Unicode symbols
 #-------------------------------------------------------------------------------
 
-function escape() {
+escape() {
   printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
   # print a newline unless we’re piping the output to another program
   if [ -t 1 ]; then
@@ -171,7 +171,7 @@ function escape() {
 # Decode \x{ABCD}-style Unicode escape sequences
 #-------------------------------------------------------------------------------
 
-function unidecode() {
+unidecode() {
   perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
   # print a newline unless we’re piping the output to another program
   if [ -t 1 ]; then
@@ -183,7 +183,7 @@ function unidecode() {
 # Get a character’s Unicode code point
 #-------------------------------------------------------------------------------
 
-function codepoint() {
+codepoint() {
   perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
   # print a newline unless we’re piping the output to another program
   if [ -t 1 ]; then
@@ -196,7 +196,7 @@ function codepoint() {
 # opens the given location
 #-------------------------------------------------------------------------------
 
-function s() {
+s() {
   if [ $# -eq 0 ]; then
     subl .;
   else
@@ -209,7 +209,7 @@ function s() {
 # location
 #-------------------------------------------------------------------------------
 
-function o() {
+o() {
   if [ $# -eq 0 ]; then
     open .;
   else
@@ -224,7 +224,7 @@ function o() {
 # small enough for one screen.
 #-------------------------------------------------------------------------------
 
-function tre() {
+tre() {
   tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
@@ -232,7 +232,7 @@ function tre() {
 # Highlight
 #-------------------------------------------------------------------------------
 
-#function hl() {
+#hl() {
 #  if [[ "$1" && "$2" ]]
 #    then
 #      if [[ -z "$3" ]] then; FONTSIZE=24; else; FONTSIZE=$3; fi;
@@ -249,46 +249,35 @@ function tre() {
 # Docker
 #-------------------------------------------------------------------------------
 
-function dip() {
+dip() {
   docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
 }
 
-function dsm() {
-	docker stop $1 && docker rm $1
+dsm() {
+	docker container stop $1 && docker container rm $1
 }
 
-function drm() {
-	#docker rm $(docker ps -a -q)
-	docker ps -a -q | xargs docker rm
+# drm() {
+# 	docker container ls -a -q | xargs docker container rm
+# }
+
+drmi() {
+	docker image ls -a | grep '<none>' | awk '{ print $3 }' | xargs docker image rm
 }
 
-function drmi() {
-	docker images | grep '<none>' | \
-	awk '{ print $3 }' | \
-	xargs docker rmi
+drun() {
+	docker container run --rm -it $@
 }
 
-function drun() {
-	docker run --rm -t -i $@
-}
-
-function drund() {
-	docker run -d --name $@ $@
-}
-
-function dbash() {
+dbash() {
 	if [ $# -lt 1 ] ; then
 	  echo "Please provide a container id or name. Usage: dbash <containerIdOrName>"
 	else
-		docker exec -it $1 bash
+		docker container exec -it $1 bash
 	fi;
 }
 
-function dps() {
-	docker exec $1 ps -f
-}
-
-function dlogs() {
+dlogs() {
   if [ "$1" = "" ]; then
     echo "view docker container logs"
     echo ""
@@ -297,14 +286,14 @@ function dlogs() {
     return 0;
   fi;
 
-  docker logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
+  docker container logs -f "$1" | jq -R '. as $line | try (fromjson) catch $line'
 }
 
 #-------------------------------------------------------------------------------
 # IP check
 #-------------------------------------------------------------------------------
 
-function myip() {
+myip() {
   curl -s "ifconfig.me"
 }
 
@@ -312,7 +301,7 @@ function myip() {
 # Release Versions
 #-------------------------------------------------------------------------------
 
-function version() {
+version() {
   local BRANCH=`git rev-parse --abbrev-ref HEAD`
   local HASH=`git show --pretty='format:%h' | head -1`
   echo $BRANCH~$HASH
@@ -322,7 +311,7 @@ function version() {
 # Find dev1 DNS
 #-------------------------------------------------------------------------------
 
-# function dev1dns() {
+# dev1dns() {
 #   local RES=`cd $HOME/meshkorea/prime-dev1-server && eb health dev1-EBPrimeBackend | grep -E 'i-[a-z0-9]{17}' | awk '{ print $1 }' | xargs aws ec2 describe-instances --profile meshdev --instance-ids | grep PrivateDnsName | head -n 1 | tr -d '[:space:]'`
 #   echo $RES
 # }
@@ -332,7 +321,7 @@ function version() {
 # e.g., $ p 7.1
 #-------------------------------------------------------------------------------
 
-function phpenv() {
+phpenv() {
   echo -e "\033[32mSwitching PHP runtime version\033[0m"
   if [ "$1" = "" ]; then
     echo ""
@@ -355,7 +344,7 @@ function phpenv() {
 # Log Tailing
 #-------------------------------------------------------------------------------
 
-function ct() {
+ct() {
   echo -e "\033[32mTailing log after truncating content\033[0m"
   if [ "$1" = "" ]; then
     echo ""
@@ -373,7 +362,7 @@ function ct() {
 # Echo with yellow color
 #-------------------------------------------------------------------------------
 
-function e() {
+e() {
   if [ "$1" = "" ]; then
     echo "Print text in \033[0;33mYellow\033[0m color"
     echo ""
@@ -390,7 +379,7 @@ function e() {
 # Toggle Xdebug
 #-------------------------------------------------------------------------------
 
-# function xd() {
+# xd() {
 #   local PHPINIPATH=$(php --ini | head -1 | cut -d ":" -f 2 | xargs echo)
 #   local XDEBUGPATH=$(find "$PHPINIPATH" | grep xdebug)
 
@@ -423,7 +412,7 @@ function e() {
 # Kill Port
 #-------------------------------------------------------------------------------
 
-function killport() {
+killport() {
   if [ "$1" = "" ]; then
     echo "Print text in \033[0;33mYellow\033[0m color"
     echo ""
@@ -441,11 +430,11 @@ function killport() {
 # yaml to json
 #-------------------------------------------------------------------------------
 
-function yq() {
+yq() {
     ruby -r yaml -r json -e 'puts YAML.load($stdin.read).to_json' | jq
 }
 
-function merge_yaml() {
+merge_yaml() {
     ruby -r 'yaml' -e "c = YAML.load(File.open('${1}')); d = YAML.load(File.open('${2}')); c.merge!(d); p c.to_yaml(:indentation => 2);"
 }
 
@@ -453,7 +442,7 @@ function merge_yaml() {
 # Reload zsh
 #-------------------------------------------------------------------------------
 
-function rr() {
+rr() {
   source $HOME/.zshrc
 }
 
@@ -461,7 +450,7 @@ function rr() {
 # Refresh DNS Cache
 #-------------------------------------------------------------------------------
 
-function reloaddns() {
+reloaddns() {
   echo -e "\033[32mRefresh DNS Cache\033[0m"
   dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 }
@@ -470,7 +459,7 @@ function reloaddns() {
 # Recursively remove .DS_Store files
 #-------------------------------------------------------------------------------
 
-function cds() {
+cds() {
   echo -e "\033[32mRecursively remove .DS_Store files\033[0m"
   find . -type f -name '*.DS_Store' -ls -delete
 }
@@ -479,7 +468,7 @@ function cds() {
 # Stop apache
 #-------------------------------------------------------------------------------
 
-function stopapache() {
+stopapache() {
   echo -e "\033[32mStop apache\033[0m"
   sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
 }
@@ -488,7 +477,7 @@ function stopapache() {
 # Extract mp3 from the given path
 #-------------------------------------------------------------------------------
 
-function mp3() {
+mp3() {
   echo -e "\033[32mExtract mp3 from the given path\033[0m"
   if [ "$1" = "" ]; then
     echo ""
@@ -503,7 +492,7 @@ function mp3() {
 # Kibana log
 #-------------------------------------------------------------------------------
 
-# function kibana() {
+# kibana() {
 #   if [ "$1" = "" ]; then
 #     echo "Kibana log viewer"
 #     echo ""
@@ -550,7 +539,7 @@ function mp3() {
 # tunnel to kubernetes cluster
 #-------------------------------------------------------------------------------
 
-# function tunnel() {
+# tunnel() {
 #   if [ "$1" = "" ]; then
 #     echo "Create SSH tunnel to kubernetes cluster"
 #     echo ""
@@ -600,7 +589,7 @@ function mp3() {
 # K8S
 #-------------------------------------------------------------------------------
 
-# function ctx() {
+# ctx() {
 #   if [ "$1" = "" ]; then
 #     echo "Switch kubernetes context"
 #     echo ""
@@ -618,7 +607,7 @@ function mp3() {
 #   kubectl config use-context $CONTEXT
 # }
 
-# function klogs() {
+# klogs() {
 #   if [ "$1" = "" ]; then
 #     echo "Tail pods logs"
 #     echo ""
@@ -643,12 +632,12 @@ function mp3() {
 # Java shell
 #-------------------------------------------------------------------------------
 
-function jsh() {
-  cd $HOME/jsh && mvn jshell:run -Djshell.scripts="startup.jsh"
+jsh() {
+  cd $HOME/jsh && ./gradlew --no-daemon --console plain jshell
   cd -
 }
 
-function javahome() {
+javahome() {
   if [ "$1" = "" ]; then
     echo "Find java home"
     echo ""
@@ -665,7 +654,7 @@ function javahome() {
 # git move tag and push
 #-------------------------------------------------------------------------------
 
-function mt() {
+mt() {
   if [ "$1" = "" ]; then
     echo "change git tag and push"
     echo ""
@@ -691,7 +680,7 @@ function mt() {
 # boot accountsbff
 #-------------------------------------------------------------------------------
 
-# function accountsbff() {
+# accountsbff() {
 #   echo "http://localhost:9800/login?client_id=563f32dc-2c32-4178-9134-64ed523c8391"
 #   cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
 #   cd -
@@ -701,7 +690,7 @@ function mt() {
 # sync neogeorefiner
 #-------------------------------------------------------------------------------
 
-function sync_refiner() {
+sync_refiner() {
   if [ "$1" = "" ]; then
     echo "neogeorefiner 이미지를 최신화합니다"
     echo ""
@@ -752,7 +741,7 @@ function sync_refiner() {
 # k8s pod log
 #-------------------------------------------------------------------------------
 
-function klogs() {
+klogs() {
   if [ "$1" = "" ]; then
     echo "view k8s pod logs"
     echo ""

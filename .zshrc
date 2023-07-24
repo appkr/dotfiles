@@ -106,7 +106,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 #-------------------------------------------------------------------------------
 
-plugins=(git git-extras npm composer docker docker-compose)
+plugins=(git git-extras npm composer docker docker-compose kubectl)
 
 #-------------------------------------------------------------------------------
 # Activate Oh-My-Zsh
@@ -152,4 +152,15 @@ fi
 # homebrew for apple silicon
 #-------------------------------------------------------------------------------
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# if type brew &>/dev/null; then
+#   PATH=$(brew --prefix)/share/zsh-completions:$PATH
+#   if [ -f "$HOME/.zcompdump" ]; then
+#     rm -f ~/.zcompdump
+#   fi
+#   autoload -Uz compinit
+#   compinit
+#   zmodload -i zsh/complist
+# fi
+
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $DOTFILES/kubectl.zsh
