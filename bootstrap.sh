@@ -60,6 +60,8 @@ arch -arm64 brew install ffmpeg
 arch -arm64 brew install dive
 arch -arm64 brew install protobuf
 arch -arm64 brew install grpcurl
+# workaround for jshell console error, @see https://github.com/mrsarm/jshell-plugin#tab-completion-and-arrow-keys-not-working
+arch -arm64 brew install rlwrap
 
 arch -arm64 brew install composer
 arch -arm64 brew install php

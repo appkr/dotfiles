@@ -633,7 +633,7 @@ mp3() {
 #-------------------------------------------------------------------------------
 
 jsh() {
-  cd $HOME/jsh && ./gradlew --no-daemon --console plain jshell
+  cd $HOME/jsh && rlwrap ./gradlew --no-daemon --console plain jshell
   cd -
 }
 
