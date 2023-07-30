@@ -4,7 +4,7 @@ PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 # Use project specific binaries before global ones
 #-------------------------------------------------------------------------------
 
-PATH="$HOME/npm/bin:$PATH"
+PATH="$(/opt/homebrew/bin/brew --prefix node@18)/bin:$HOME/npm/bin:$PATH"
 export NODE_PATH="$HOME/npm/lib/node_modules"
 
 #-------------------------------------------------------------------------------
