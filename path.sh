@@ -69,4 +69,4 @@ PATH="$(brew --prefix kubernetes-cli@1.22)/bin:$PATH"
 
 PATH="${HOME}/sdk/go1.20.4/bin:$PATH"
 
-export PATH="$DOTFILES/bin:$PATH"
+export PATH="$DOTFILES/bin:/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
