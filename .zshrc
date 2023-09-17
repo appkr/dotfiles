@@ -1,166 +1,31 @@
-#-------------------------------------------------------------------------------
-# Path to your dotfiles installation.
-#-------------------------------------------------------------------------------
-
+export EDITOR=vim
 export DOTFILES=$HOME/dotfiles
-
-#-------------------------------------------------------------------------------
-# Path to your oh-my-zsh installation.
-#-------------------------------------------------------------------------------
-
 export ZSH=$HOME/.oh-my-zsh
+export NODE_PATH=$HOME/npm/lib/node_modules
 
-#-------------------------------------------------------------------------------
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#-------------------------------------------------------------------------------
+export FLEX_USER_EMAIL=juwon@flex.team
+export OKTA_API_KEY=FILL_ME
 
-# see https://github.com/bhilburn/powerlevel9k
+# theme
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
-ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
 
-#export ZSH_THEME="powerline"
-#export ZSH_THEME="agnoster"
-
-#------------------------------------------------------------------------------
-# Uncomment the following line to use case-sensitive completion.
-#-------------------------------------------------------------------------------
-
 CASE_SENSITIVE="true"
 
-#-------------------------------------------------------------------------------
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-#-------------------------------------------------------------------------------
+plugins=(git kubectl)
 
-# HYPHEN_INSENSITIVE="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to disable bi-weekly auto-update checks.
-#-------------------------------------------------------------------------------
-
-# DISABLE_AUTO_UPDATE="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to change how often to auto-update (in days).
-#-------------------------------------------------------------------------------
-
-export UPDATE_ZSH_DAYS=7
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to disable colors in ls.
-#-------------------------------------------------------------------------------
-
-# DISABLE_LS_COLORS="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to disable auto-setting terminal title.
-#-------------------------------------------------------------------------------
-
-# DISABLE_AUTO_TITLE="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to enable command auto-correction.
-#-------------------------------------------------------------------------------
-
-# ENABLE_CORRECTION="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line to display red dots whilst waiting for completion.
-#-------------------------------------------------------------------------------
-
-COMPLETION_WAITING_DOTS="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-#-------------------------------------------------------------------------------
-
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-#-------------------------------------------------------------------------------
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-#-------------------------------------------------------------------------------
-
-HIST_STAMPS="yyyy-mm-dd"
-
-#-------------------------------------------------------------------------------
-# Would you like to use another custom folder than $ZSH/custom?
-#-------------------------------------------------------------------------------
-
-# ZSH_CUSTOM=$DOTFILES
-
-#-------------------------------------------------------------------------------
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-#-------------------------------------------------------------------------------
-
-plugins=(git git-extras npm composer docker docker-compose kubectl)
-
-#-------------------------------------------------------------------------------
-# Activate Oh-My-Zsh
-#-------------------------------------------------------------------------------
-
-source $ZSH/oh-my-zsh.sh
-
-#-------------------------------------------------------------------------------
-# Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-#-------------------------------------------------------------------------------
-
-files=("$DOTFILES/export.sh" "$DOTFILES/path.sh" "$DOTFILES/aliases.sh" "$DOTFILES/functions.sh");
-
+# custom export, path, alias, functions
+files=("$DOTFILES/path.sh" "$DOTFILES/aliases.sh" "$DOTFILES/functions.sh");
 for file in "${files[@]}"; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
-
 unset files file;
 
-#-------------------------------------------------------------------------------
-# Activate kubectl, kafakctl Auto Completion
-#-------------------------------------------------------------------------------
-
+source $ZSH/oh-my-zsh.sh
 source <(kubectl completion zsh)
-source <(kafkactl completion zsh)
-
-#-------------------------------------------------------------------------------
-# Activate jenv & rbenv & pyenv
-#-------------------------------------------------------------------------------
-
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-if which pyenv > /dev/null; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
-fi
-
-#-------------------------------------------------------------------------------
-# Prefer zsh-completions
-# @see https://stackoverflow.com/a/26479426
-#-------------------------------------------------------------------------------
-
-# if type brew &>/dev/null; then
-#   PATH=$(brew --prefix)/share/zsh-completions:$PATH
-#   if [ -f "$HOME/.zcompdump" ]; then
-#     rm -f ~/.zcompdump
-#   fi
-#   autoload -Uz compinit
-#   compinit
-#   zmodload -i zsh/complist
-# fi
-
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $DOTFILES/kubectl.zsh
+source $HOME/.sdkman/bin/sdkman-init.sh
