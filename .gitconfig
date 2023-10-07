@@ -3,10 +3,9 @@
 #-------------------------------------------------------------------------------
 
 [core]
-	user = appkr
-	email = juwonkim@me.com
+	user = flex-juwon
+	email = juwon@flex.team
 	editor = vim
-	excludesfile = /Users/appkr/dotfiles/.gitignore_global
 	precomposeunicode = true
 	quotepath = false
 
@@ -29,8 +28,8 @@
 	default = simple
 
 [user]
-	name = appkr
-	email = juwonkim@me.com
+	name = flex-juwon
+	email = juwon@flex.team
 
 [filter "lfs"]
 	required = true

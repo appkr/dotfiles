@@ -33,52 +33,6 @@ alias dc="docker-compose"
 alias nah="git reset --hard HEAD"
 
 #-------------------------------------------------------------------------------
-# Laravel
-#-------------------------------------------------------------------------------
-
-# alias prime="docker exec -it prime"
-# alias art="prime php artisan"
-# alias artisan="prime php artisan"
-# alias tinker="prime php artisan tinker"
-
-# for reference
-# alias ebtinker='sudo -E -u webapp bash -c "HOME=/tmp; php /var/app/current/artisan tinker"'
-
-#-------------------------------------------------------------------------------
-# Symfony
-#-------------------------------------------------------------------------------
-
-# alias console="php bin/console"
-# alias con="php bin/console"
-
-#-------------------------------------------------------------------------------
-# PHP Development
-#-------------------------------------------------------------------------------
-
-alias pt="vendor/bin/phpunit -d memory_limit=1G"
-alias psh="psysh"
-alias pshell="psysh"
-
-#-------------------------------------------------------------------------------
-# MeshDev
-# e.g. $ primeenv dev1
-#-------------------------------------------------------------------------------
-
-# TODO NEED TO FIX
-# alias primeenv="bastion-switcher"
-
-#-------------------------------------------------------------------------------
-# AWS CW Logs
-#-------------------------------------------------------------------------------
-
-# list all log groups
-# aws logs describe-log-groups --query "logGroups[].[logGroupName]" --output text --profile eb-cli --region ap-northeast-2
-
-# list all log streams
-# LOG_GROUP_OF_INTEREST=/aws/rds/instance/prime-production/slowquery
-# aws logs describe-log-streams --log-group-name "${LOG_GROUP_OF_INTEREST}" --query "logStreams[].[logStreamName]" --output text  --profile eb-cli --region ap-northeast-2
-
-#-------------------------------------------------------------------------------
 # kubectl, kafkactl
 # @see https://kubernetes.io/ko/docs/reference/kubectl/cheatsheet/
 # @see https://github.com/deviceinsight/kafkactl
@@ -97,9 +51,3 @@ alias k=kubectl
 alias ctx=kubectx
 # for config file @see $HOME/.config/kafkactl/config.yml
 alias kf=kafkactl
-
-#-------------------------------------------------------------------------------
-# ffplay
-#-------------------------------------------------------------------------------
-
-alias ff=ffplay -hide_banner -stats -i

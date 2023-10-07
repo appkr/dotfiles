@@ -134,29 +134,11 @@ dataurl() {
 }
 
 #-------------------------------------------------------------------------------
-# Start a PHP local server from a directory, optionally specifying the port
-# (Requires PHP 5.4.0+.)
-#-------------------------------------------------------------------------------
-
-phpserver() {
-  echo -e "\033[32mSwitching PHP runtime version\033[0m"
-  echo ""
-  echo "Usage:"
-  echo "  phpserver <port>"
-  echo ""
-
-  local port="${1:-8000}";
-  local ip=$(ipconfig getifaddr en0);
-  sleep 1 && open "http://${ip}:${port}/" &
-  php -S "${ip}:${port}";
-}
-
-#-------------------------------------------------------------------------------
 # Convert EUC-KR to UTF-8
 #-------------------------------------------------------------------------------
 
 enc() {
-  iconv -c -f EUC-KR -t UTF-8 $1 > utf8_"$1"
+  iconv -c -f EUC-KR -t UTF-8 $1 > "$1"_utf8
 }
 
 #-------------------------------------------------------------------------------
@@ -196,32 +178,6 @@ codepoint() {
 }
 
 #-------------------------------------------------------------------------------
-# `s` with no arguments opens the current directory in Sublime Text, otherwise
-# opens the given location
-#-------------------------------------------------------------------------------
-
-s() {
-  if [ $# -eq 0 ]; then
-    subl .;
-  else
-    subl "$@";
-  fi;
-}
-
-#-------------------------------------------------------------------------------
-# `o` with no arguments opens the current directory, otherwise opens the given
-# location
-#-------------------------------------------------------------------------------
-
-o() {
-  if [ $# -eq 0 ]; then
-    open .;
-  else
-    open "$@";
-  fi;
-}
-
-#-------------------------------------------------------------------------------
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
@@ -229,25 +185,8 @@ o() {
 #-------------------------------------------------------------------------------
 
 tre() {
-  tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+  tree -aC -I '.git|.gradle|.idea' --dirsfirst "$@" | less -FRNX;
 }
-
-#-------------------------------------------------------------------------------
-# Highlight
-#-------------------------------------------------------------------------------
-
-#hl() {
-#  if [[ "$1" && "$2" ]]
-#    then
-#      if [[ -z "$3" ]] then; FONTSIZE=24; else; FONTSIZE=$3; fi;
-#      highlight -O rtf $1 --syntax $2 --font D2Coding --style solarized-dark \
-#          --font-size $FONTSIZE | pbcopy
-#    else
-#      echo "\033[31mError: missing required arguments.\033[0m"
-#      echo "Usage: "
-#      echo "  hl filename syntax [fontsize]"
-#    fi
-#}
 
 #-------------------------------------------------------------------------------
 # Docker
@@ -312,39 +251,6 @@ version() {
 }
 
 #-------------------------------------------------------------------------------
-# Find dev1 DNS
-#-------------------------------------------------------------------------------
-
-# dev1dns() {
-#   local RES=`cd $HOME/meshkorea/prime-dev1-server && eb health dev1-EBPrimeBackend | grep -E 'i-[a-z0-9]{17}' | awk '{ print $1 }' | xargs aws ec2 describe-instances --profile meshdev --instance-ids | grep PrivateDnsName | head -n 1 | tr -d '[:space:]'`
-#   echo $RES
-# }
-
-#-------------------------------------------------------------------------------
-# Homebrew PHP Version Switcher
-# e.g., $ p 7.1
-#-------------------------------------------------------------------------------
-
-phpenv() {
-  echo -e "\033[32mSwitching PHP runtime version\033[0m"
-  if [ "$1" = "" ]; then
-    echo ""
-    echo "Usage:"
-    echo "  phpenv <php_version>"
-    echo "  e.g. p 7.2"
-    echo ""
-    echo "Available versions:"
-    ls -al /usr/local/Cellar | grep php@
-    return 0;
-  fi;
-
-  local VERSION="$1"
-  echo "Switching PHP runtime to ${VERSION}"
-  brew-php-switcher $VERSION && sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
-  echo "Switched PHP runtime to ${VERSION}"
-}
-
-#-------------------------------------------------------------------------------
 # Log Tailing
 #-------------------------------------------------------------------------------
 
@@ -378,39 +284,6 @@ e() {
   local TEXT="$1"
   echo -e "\033[0;33m${TEXT}\033[0m"
 }
-
-#-------------------------------------------------------------------------------
-# Toggle Xdebug
-#-------------------------------------------------------------------------------
-
-# xd() {
-#   local PHPINIPATH=$(php --ini | head -1 | cut -d ":" -f 2 | xargs echo)
-#   local XDEBUGPATH=$(find "$PHPINIPATH" | grep xdebug)
-
-#   if [ $XDEBUGPATH = "" ]; then
-#       echo "Xdebug not found"
-#       return 0;
-#   fi;
-
-#   local SUFFIX=".disabled"
-#   local NEWPATH=""
-#   local MESSAGE1=""
-#   local MESSAGE3=""
-
-#   if [[ "$XDEBUGPATH" =~ .*disabled$ ]]; then
-#       NEWPATH=$(echo "${XDEBUGPATH%$SUFFIX}")
-#       MESSAGE1="Changing state from \033[32mON\033[0m to \033[31mOFF\033[0m"
-#       MESSAGE3="\033[32mXdebug is now ON\033[0m"
-#   else
-#       NEWPATH="${XDEBUGPATH}${SUFFIX}"
-#       MESSAGE1="Changing state from \033[31mOFF\033[0m to \033[32mON\033[0m"
-#       MESSAGE3="\033[31mXdebug is now OFF\033[0m"
-#   fi;
-
-#   echo -e $MESSAGE1
-#   sudo mv $XDEBUGPATH $NEWPATH
-#   echo -e $MESSAGE3
-# }
 
 #-------------------------------------------------------------------------------
 # Kill Port
@@ -478,183 +351,6 @@ stopapache() {
 }
 
 #-------------------------------------------------------------------------------
-# Extract mp3 from the given path
-#-------------------------------------------------------------------------------
-
-mp3() {
-  echo -e "\033[32mExtract mp3 from the given path\033[0m"
-  if [ "$1" = "" ]; then
-    echo ""
-    echo "Usage:"
-    echo "  mp3 <url>"
-  fi;
-
-  youtube-dl --extract-audio --audio-format mp3 $1
-}
-
-#-------------------------------------------------------------------------------
-# Kibana log
-#-------------------------------------------------------------------------------
-
-# kibana() {
-#   if [ "$1" = "" ]; then
-#     echo "Kibana log viewer"
-#     echo ""
-#     echo "Usage:"
-#     echo "  kibana <context>"
-#     echo "  e.g. kibana q"
-#     echo "  e.g. kibana p"
-#     echo ""
-#     echo "Avaliable contexts:"
-#     echo "  'q' for vroong-qa, 'p' for vroong-prod, 'tms-dev', 'tms-qa', 'tms-prod'"
-#     return 0;
-#   fi;
-
-#   local CONTEXT="$1"
-#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
-
-#   case "${CONTEXT}" in
-#       [qQ])
-#           open https://localhost:9500/_plugin/kibana
-#           ssh vroong.elk.qa -N -v
-#           ;;
-#       [pP])
-#           open https://localhost:9600/_plugin/kibana
-#           ssh vroong.elk.prod -N -v
-#           ;;
-#       tms-dev)
-#           open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:d6781ae0-a727-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
-#           ssh tms.elk.dev -N -v
-#           ;;
-#       tms-qa)
-#           open "https://localhost:9200/_plugin/kibana/app/kibana#/discover?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(agent.hostname,message,traceId),index:cad582d0-b76d-11ea-833e-d1d011d9d56a,interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))"
-#           ssh tms.elk.dev -N -v
-#           ;;
-#       tms-prod)
-#           open "https://kibana.meshtools.io/s/tms/app/kibana#/discover?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(level,message,traceId),filters:!(),index:c5bd0410-eb63-11ea-b2f5-3f2fe4fd70f4,interval:auto,query:(language:kuery,query:''),sort:!())"
-#           ;;
-#       *)
-#           echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
-#           ;;
-#   esac
-# }
-
-#-------------------------------------------------------------------------------
-# tunnel to kubernetes cluster
-#-------------------------------------------------------------------------------
-
-# tunnel() {
-#   if [ "$1" = "" ]; then
-#     echo "Create SSH tunnel to kubernetes cluster"
-#     echo ""
-#     echo "Usage:"
-#     echo "  tunnel <context>"
-#     echo "  e.g. tunnel d1"
-#     echo "  e.g. tunnel q1"
-#     echo "  e.g. tunnel q2"
-#     echo "  e.g. tunnel q3"
-#     echo "  e.g. tunnel p"
-#     echo ""
-#     echo "Avaliable contexts:"
-#     echo "  d1 for dev1"
-#     echo "  q1 for qa1"
-#     echo "  q2 for qa2"
-#     echo "  q3 for qa3"
-#     echo "  p for prod"
-#     return 0;
-#   fi;
-
-#   local CONTEXT="$1"
-#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
-
-#   case "${CONTEXT}" in
-#       [dD]1)
-#           ssh eks.dev -v -N -S none -o ControlMaster=no
-#           ;;
-#       [qQ][1])
-#           ssh k8s.qa1 -v -N -S none -o ControlMaster=no
-#           ;;
-#       [qQ][2])
-#           ssh k8s.qa2 -v -N -S none -o ControlMaster=no
-#           ;;
-#       [qQ][3])
-#           ssh k8s.qa3 -v -N -S none -o ControlMaster=no
-#           ;;
-#       [pP])
-#           ssh k8s.prod -v -N -S none -o ControlMaster=no
-#           ;;
-#       *)
-#           echo -e "\033[0;33m${CONTEXT} is not acceptable\033[0m"
-#           ;;
-#   esac
-# }
-
-#-------------------------------------------------------------------------------
-# K8S
-#-------------------------------------------------------------------------------
-
-# ctx() {
-#   if [ "$1" = "" ]; then
-#     echo "Switch kubernetes context"
-#     echo ""
-#     echo "Usage:"
-#     echo "  ctx <context>"
-#     echo "  e.g. ctx vroong-dev1"
-#     echo ""
-#     echo "Avaliable contexts:"
-#     kubectl config get-contexts
-#     return 0;
-#   fi;
-
-#   local CONTEXT="$1"
-#   echo -e "\033[32mSwitching context to ${CONTEXT}\033[0m"
-#   kubectl config use-context $CONTEXT
-# }
-
-# klogs() {
-#   if [ "$1" = "" ]; then
-#     echo "Tail pods logs"
-#     echo ""
-#     echo "Usage:"
-#     echo "  klogs <app>"
-#     echo "  e.g. klogs uaa"
-#     echo ""
-#     return 0;
-#   fi;
-
-#   local APP="$1"
-#   {
-#     # local POD=$(kubectl get pods -l app=pointcharger -o jsonpath={.items..metadata.name})
-#     kubectl logs -f -l app=$APP --all-containers
-#   } || {
-#     # kubectl get pods -o jsonpath='{.items[*].metadata.labels.app}' | grep $APP
-#     kubectl get pods | { head -n 1; grep $APP }
-#   }
-# }
-
-#-------------------------------------------------------------------------------
-# Java shell
-#-------------------------------------------------------------------------------
-
-jsh() {
-  cd $HOME/jsh && ./gradlew --no-daemon --console plain jshell
-  cd -
-}
-
-javahome() {
-  if [ "$1" = "" ]; then
-    echo "Find java home"
-    echo ""
-    echo "Usage:"
-    echo '  javahome <version>'
-    echo "  e.g. javahome 1.8"
-    return 0;
-  fi;
-
-  /usr/libexec/java_home -v $1
-}
-
-#-------------------------------------------------------------------------------
 # git move tag and push
 #-------------------------------------------------------------------------------
 
@@ -678,67 +374,6 @@ mt() {
     git push origin :$1
     git push origin $1
   fi;
-}
-
-#-------------------------------------------------------------------------------
-# boot accountsbff
-#-------------------------------------------------------------------------------
-
-# accountsbff() {
-#   echo "http://localhost:9800/login?client_id=563f32dc-2c32-4178-9134-64ed523c8391"
-#   cd $HOME/msa/vroong-accountsbff && export APPLICATION_UAAENDPOINT=http://localhost:9999 && ./gradlew clean bootRun
-#   cd -
-# }
-
-#-------------------------------------------------------------------------------
-# sync neogeorefiner
-#-------------------------------------------------------------------------------
-
-sync_refiner() {
-  if [ "$1" = "" ]; then
-    echo "neogeorefiner 이미지를 최신화합니다"
-    echo ""
-    echo "Usage:"
-    echo "  $0 <tag_name>"
-    echo "  e.g. $0 etpost-20220915030019"
-    return 0;
-  fi;
-
-  container=$(docker inspect neogeorefiner --format "{{json .State.Status}}" 2> /dev/null | xargs)
-  if [ "running" = "$container" ]; then
-    print_red "neogeorefiner docker container is running"
-    echo ""
-    print_bold "  cd vroong-neogeo && ./gradlew composeDown"
-    echo ""
-    return 0;
-  fi
-
-  print_red "기존 이미지를 지울까요? [y/N]} "
-  read -r response
-  case "$response" in
-   [yY])
-     candidate1=$(docker image ls --filter=reference="neogeorefiner" --quiet)
-     candidate2=$(docker image ls --filter=reference="200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner" --quiet)
-     docker image rm $candidate1 $candidate2 --force
-     ;;
-  esac
-
-  print_green "ECR에 로그인합니다"
-  aws ecr get-login-password --region ap-northeast-2 --profile meshtools | docker login --username AWS --password-stdin 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com
-
-  echo ""
-
-  print_green "이미지를 내려받습니다"
-  docker pull 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1
-
-  echo ""
-
-  print_green "neogeorefiner:latest 태그를 부여합니다"
-  docker tag 200327251464.dkr.ecr.ap-northeast-2.amazonaws.com/vroong/neogeorefiner:$1 neogeorefiner:latest
-
-  echo ""
-
-  print_green "성공"
 }
 
 #-------------------------------------------------------------------------------
