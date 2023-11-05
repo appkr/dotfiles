@@ -17,6 +17,16 @@ PATH="$(brew --prefix node@18)/bin:$HOME/npm/bin:$PATH"
 PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 #-------------------------------------------------------------------------------
+# Ruby
+#-------------------------------------------------------------------------------
+
+mkdir -p $HOME/gems
+export GEM_HOME=$HOME/gems
+export GEM_PATH=$HOME/gems
+
+PATH="$(brew --prefix ruby)/bin:$GEM_HOME/bin:$PATH"
+
+#-------------------------------------------------------------------------------
 # Put idea in the path
 #-------------------------------------------------------------------------------
 
