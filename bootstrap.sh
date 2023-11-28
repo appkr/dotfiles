@@ -109,6 +109,14 @@ git config --global user.name "appkr"
 git config --global user.email "juwonkim@me.com"
 
 #-------------------------------------------------------------------------------
+# Install git stat
+#-------------------------------------------------------------------------------
+
+git clone https://github.com/baekdev/git-stat.git ~/git-stat
+chmod 755 ~/git-stat/git_local_changes_stat.sh
+git config --global alias.stat '!sh ~/git-stat/git_local_changes_stat.sh'
+
+#-------------------------------------------------------------------------------
 # Make ZSH the default shell environment
 #-------------------------------------------------------------------------------
 
