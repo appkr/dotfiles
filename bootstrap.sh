@@ -33,11 +33,12 @@ brew install zsh
 brew install zsh-completions
 brew install coreutils
 brew install findutils
-brew install gnu-sed
+brew install gnu-sed # All commands have been installed with the prefix "g"
 brew install awscli
 brew install aws-elasticbeanstalk
 brew install git
 brew install ghz
+brew install grep # All commands have been installed with the prefix "g"
 brew install htop
 brew install httpie
 brew install jq

@@ -298,7 +298,11 @@ dlogs() {
 #-------------------------------------------------------------------------------
 
 myip() {
-  curl -s "ifconfig.me"
+  ensure_dependency ggrep
+  local LOCAL_IP=$(ifconfig en0 inet | ggrep -Po '([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3})(?= netmask)')
+  echo -e "local IP: $LOCAL_IP"
+  local EXTERNAL_IP=$(curl -s ifconfig.me)
+  echo -e "external IP: $EXTERNAL_IP"
 }
 
 #-------------------------------------------------------------------------------
