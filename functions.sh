@@ -338,11 +338,17 @@ reloaddns() {
 
 #-------------------------------------------------------------------------------
 # Recursively remove .DS_Store files
+# -type d -path "$cloud_drive*" -prune: $cloud_drive 경로를 제외한다
+# -o: 논리 OR 연산자로, 클라우드 드라이브 경로가 아닌 다른 경로를 계속 탐색한다
+# -name '*.DS_Store' -print -delete: .DS_Store 파일을 찾아서 출력하고 삭제한다
 #-------------------------------------------------------------------------------
 
-cds() {
+cds () {
   echo -e "\033[32mRecursively remove .DS_Store files\033[0m"
-  find . -type f -name '*.DS_Store' -ls -delete
+  # 클라우드 드라이브 경로
+  cloud_drive="$HOME/Library/CloudStorage/"
+
+  find . -type d -path "$cloud_drive*" -prune -o -name '*.DS_Store' -print -delete
 }
 
 #-------------------------------------------------------------------------------
