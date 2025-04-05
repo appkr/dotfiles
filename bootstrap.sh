@@ -50,7 +50,7 @@ brew install tree
 brew install watch
 brew install wget
 brew install yarn
-brew install youtube-dl
+brew install yt-dlp
 brew install openapi-generator
 brew install aws-iam-authenticator
 brew install speedtest-cli
